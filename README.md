@@ -1,3 +1,5 @@
+# install
+安装请参考[fast-reid](https://github.com/JDAI-CV/fast-reid)
 # DM-OSNet
 model|config|weight
 |:---|:---|:---
