@@ -1,4 +1,4 @@
-<img src=".github/FastReID-Logo.png" width="300" >
+<!-- <img src=".github/FastReID-Logo.png" width="300" > -->
 
 [![Gitter](https://badges.gitter.im/fast-reid/community.svg)](https://gitter.im/fast-reid/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
@@ -6,7 +6,7 @@ Gitter: [fast-reid/community](https://gitter.im/fast-reid/community?utm_source=s
 
 Wechat: 
 
-<img src=".github/wechat_group.png" width="150" >
+<!-- <img src=".github/wechat_group.png" width="150" > -->
 
 
 FastReID is a research platform that implements state-of-the-art re-identification algorithms. It is a ground-up rewrite of the previous version, [reid strong baseline](https://github.com/michuanhaohao/reid-strong-baseline).
