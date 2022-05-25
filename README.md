@@ -1,5 +1,9 @@
 # install
-安装请参考[fast-reid](https://github.com/JDAI-CV/fast-reid)
+安装和基础的使用说明请参考[fast-reid](https://github.com/JDAI-CV/fast-reid)
+# dataset
+market1501 [GoogleDriver](https://drive.google.com/file/d/0B8-rUzbwVRk0c054eEozWG9COHM/view)
+<!-- [dukeMTMC](https://github.com/sxzrt/DukeMTMC-reID_evaluation) -->
+dukeMTMC [GoogleDriver](https://drive.google.com/open?id=1jjE85dRCMOgRtvJ5RQV9-Afs-2_5dY3O)
 # DM-OSNet
 model|config|weight
 |:---|:---|:---
