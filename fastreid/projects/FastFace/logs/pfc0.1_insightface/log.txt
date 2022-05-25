@@ -1,0 +1,3786 @@
+[11/30 23:54:44] fastreid INFO: Rank of current process: 0. World size: 1
+[11/30 23:54:45] fastreid INFO: Environment info:
+----------------------  ---------------------------------------------------------------
+sys.platform            linux
+Python                  3.9.5 (default, Jun  4 2021, 12:28:51) [GCC 7.5.0]
+numpy                   1.21.3
+fastreid                1.3 @/home/zyl/fast-reid/./fastreid
+FASTREID_ENV_MODULE     <not set>
+PyTorch                 1.9.0 @/home/zyl/enter/lib/python3.9/site-packages/torch
+PyTorch debug build     False
+GPU available           True
+GPU 0                   GeForce GTX 1050 Ti
+CUDA_HOME               /usr/local/cuda-11.1
+Pillow                  8.3.1
+torchvision             0.10.0 @/home/zyl/enter/lib/python3.9/site-packages/torchvision
+torchvision arch flags  sm_35, sm_50, sm_60, sm_70, sm_75, sm_80, sm_86
+fvcore                  0.1.5.post20211023
+cv2                     4.5.4-dev
+----------------------  ---------------------------------------------------------------
+PyTorch built with:
+  - GCC 7.3
+  - C++ Version: 201402
+  - Intel(R) oneAPI Math Kernel Library Version 2021.3-Product Build 20210617 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v2.1.2 (Git Hash 98be7e8afa711dc9b66c8ff3504129cb82013cdb)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 11.1
+  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_37,code=compute_37
+  - CuDNN 8.0.5
+  - Magma 2.5.2
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.1, CUDNN_VERSION=8.0.5, CXX_COMPILER=/opt/rh/devtoolset-7/root/usr/bin/c++, CXX_FLAGS= -Wno-deprecated -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -fopenmp -DNDEBUG -DUSE_KINETO -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wno-narrowing -Wall -Wextra -Werror=return-type -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-result -Wno-unused-local-typedefs -Wno-strict-overflow -Wno-strict-aliasing -Wno-error=deprecated-declarations -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=redundant-decls -Wno-error=old-style-cast -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=1.9.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, 
+
+[11/30 23:54:45] fastreid INFO: Command line arguments: Namespace(config_file='/home/zyl/fast-reid/projects/FastFace/configs/r50_ir.yml', resume=False, eval_only=False, num_gpus=1, num_machines=1, machine_rank=0, dist_url='tcp://127.0.0.1:50152', opts=['MODEL.DEVICE', 'cuda:0'])
+[11/30 23:54:45] fastreid INFO: Contents of args.config_file=/home/zyl/fast-reid/projects/FastFace/configs/r50_ir.yml:
+_BASE_: face_base.yml
+
+MODEL:
+
+  BACKBONE:
+    DEPTH: 50x
+    FEAT_DIM: 25088 # 512x7x7
+    DROPOUT: 0.
+
+  HEADS:
+    PFC:
+      ENABLED: True
+
+OUTPUT_DIR: projects/FastFace/logs/pfc0.1_insightface
+
+[11/30 23:54:45] fastreid INFO: Running with full config:
+CUDNN_BENCHMARK: True
+DATALOADER:
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 8
+  SAMPLER_TRAIN: TrainingSampler
+  SET_WEIGHT: []
+DATASETS:
+  COMBINEALL: False
+  NAMES: ('MS1MV2',)
+  REC_PATH: /export/home/DATA/Glint360k/train.rec
+  TESTS: ('CFP_FP', 'AgeDB_30', 'LFW')
+INPUT:
+  AFFINE:
+    ENABLED: False
+  AUGMIX:
+    ENABLED: False
+    PROB: 0.0
+  AUTOAUG:
+    ENABLED: False
+    PROB: 0.0
+  CJ:
+    BRIGHTNESS: 0.15
+    CONTRAST: 0.15
+    ENABLED: False
+    HUE: 0.1
+    PROB: 0.5
+    SATURATION: 0.1
+  CROP:
+    ENABLED: False
+    RATIO: [0.75, 1.3333333333333333]
+    SCALE: [0.16, 1]
+    SIZE: [224, 224]
+  FLIP:
+    ENABLED: True
+    PROB: 0.5
+  PADDING:
+    ENABLED: False
+    MODE: constant
+    SIZE: 10
+  REA:
+    ENABLED: False
+    PROB: 0.5
+    VALUE: [123.675, 116.28, 103.53]
+  RPT:
+    ENABLED: False
+    PROB: 0.5
+  SIZE_TEST: [0]
+  SIZE_TRAIN: [0]
+KD:
+  EMA:
+    ENABLED: False
+    MOMENTUM: 0.999
+  MODEL_CONFIG: []
+  MODEL_WEIGHTS: []
+MODEL:
+  BACKBONE:
+    ATT_DROP_RATE: 0.0
+    DEPTH: 50x
+    DROPOUT: 0.0
+    DROP_PATH_RATIO: 0.1
+    DROP_RATIO: 0.0
+    FEAT_DIM: 25088
+    LAST_STRIDE: 1
+    NAME: build_iresnet_backbone
+    NORM: BN
+    PRETRAIN: False
+    PRETRAIN_PATH: 
+    SIE_COE: 3.0
+    STRIDE_SIZE: (16, 16)
+    WITH_IBN: False
+    WITH_NL: False
+    WITH_SE: False
+  DEVICE: cuda:0
+  FREEZE_LAYERS: []
+  HEADS:
+    CLS_LAYER: CosSoftmax
+    EMBEDDING_DIM: 512
+    MARGIN: 0.4
+    NAME: FaceHead
+    NECK_FEAT: after
+    NORM: BN
+    NUM_CLASSES: 360232
+    PFC:
+      ENABLED: True
+      SAMPLE_RATE: 0.1
+    POOL_LAYER: Flatten
+    SCALE: 64
+    WITH_BNNECK: True
+  LOSSES:
+    CE:
+      ALPHA: 0.2
+      EPSILON: 0.0
+      SCALE: 1.0
+    CIRCLE:
+      GAMMA: 128
+      MARGIN: 0.25
+      SCALE: 1.0
+    COSFACE:
+      GAMMA: 128
+      MARGIN: 0.25
+      SCALE: 1.0
+    FL:
+      ALPHA: 0.25
+      GAMMA: 2
+      SCALE: 1.0
+    NAME: ('CrossEntropyLoss',)
+    TRI:
+      HARD_MINING: False
+      MARGIN: 0.3
+      NORM_FEAT: False
+      SCALE: 1.0
+  META_ARCHITECTURE: FaceBaseline
+  PIXEL_MEAN: [127.5, 127.5, 127.5]
+  PIXEL_STD: [127.5, 127.5, 127.5]
+  QUEUE_SIZE: 8192
+  WEIGHTS: 
+OUTPUT_DIR: projects/FastFace/logs/pfc0.1_insightface
+SOLVER:
+  AMP:
+    ENABLED: True
+  BASE_LR: 0.05
+  BIAS_LR_FACTOR: 1.0
+  CHECKPOINT_PERIOD: 1
+  CLIP_GRADIENTS:
+    CLIP_TYPE: norm
+    CLIP_VALUE: 5.0
+    ENABLED: False
+    NORM_TYPE: 2.0
+  DELAY_EPOCHS: 0
+  ETA_MIN_LR: 1e-07
+  FREEZE_ITERS: 0
+  GAMMA: 0.1
+  HEADS_LR_FACTOR: 1.0
+  IMS_PER_BATCH: 256
+  MAX_EPOCH: 20
+  MOMENTUM: 0.9
+  NESTEROV: False
+  OPT: SGD
+  SCHED: MultiStepLR
+  STEPS: [8, 12, 15, 18]
+  WARMUP_FACTOR: 0.1
+  WARMUP_ITERS: 0
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+  WEIGHT_DECAY_NORM: 0.0005
+TEST:
+  AQE:
+    ALPHA: 3.0
+    ENABLED: False
+    QE_K: 5
+    QE_TIME: 1
+  EVAL_PERIOD: 1
+  FLIP:
+    ENABLED: False
+  IMS_PER_BATCH: 1024
+  METRIC: cosine
+  PRECISE_BN:
+    DATASET: Market1501
+    ENABLED: False
+    NUM_ITER: 300
+  RERANK:
+    ENABLED: False
+    K1: 20
+    K2: 6
+    LAMBDA: 0.3
+  ROC:
+    ENABLED: False
+[11/30 23:54:45] fastreid INFO: Full config saved to /home/zyl/fast-reid/projects/FastFace/logs/pfc0.1_insightface/config.yaml
+[11/30 23:54:45] fastreid.utils.env INFO: Using a generated random seed 45070780
+[11/30 23:54:45] fastreid.face_data INFO: loading recordio /export/home/DATA/Glint360k/train.rec...
+[12/01 00:00:06] fastreid INFO: Rank of current process: 0. World size: 1
+[12/01 00:00:15] fastreid INFO: Environment info:
+----------------------  ---------------------------------------------------------------
+sys.platform            linux
+Python                  3.9.5 (default, Jun  4 2021, 12:28:51) [GCC 7.5.0]
+numpy                   1.21.3
+fastreid                1.3 @/home/zyl/fast-reid/./fastreid
+FASTREID_ENV_MODULE     <not set>
+PyTorch                 1.9.0 @/home/zyl/enter/lib/python3.9/site-packages/torch
+PyTorch debug build     False
+GPU available           True
+GPU 0                   GeForce GTX 1050 Ti
+CUDA_HOME               /usr/local/cuda-11.1
+Pillow                  8.3.1
+torchvision             0.10.0 @/home/zyl/enter/lib/python3.9/site-packages/torchvision
+torchvision arch flags  sm_35, sm_50, sm_60, sm_70, sm_75, sm_80, sm_86
+fvcore                  0.1.5.post20211023
+cv2                     4.5.4-dev
+----------------------  ---------------------------------------------------------------
+PyTorch built with:
+  - GCC 7.3
+  - C++ Version: 201402
+  - Intel(R) oneAPI Math Kernel Library Version 2021.3-Product Build 20210617 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v2.1.2 (Git Hash 98be7e8afa711dc9b66c8ff3504129cb82013cdb)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 11.1
+  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_37,code=compute_37
+  - CuDNN 8.0.5
+  - Magma 2.5.2
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.1, CUDNN_VERSION=8.0.5, CXX_COMPILER=/opt/rh/devtoolset-7/root/usr/bin/c++, CXX_FLAGS= -Wno-deprecated -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -fopenmp -DNDEBUG -DUSE_KINETO -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wno-narrowing -Wall -Wextra -Werror=return-type -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-result -Wno-unused-local-typedefs -Wno-strict-overflow -Wno-strict-aliasing -Wno-error=deprecated-declarations -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=redundant-decls -Wno-error=old-style-cast -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=1.9.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, 
+
+[12/01 00:00:15] fastreid INFO: Command line arguments: Namespace(config_file='/home/zyl/fast-reid/projects/FastFace/configs/r50_ir.yml', resume=False, eval_only=False, num_gpus=1, num_machines=1, machine_rank=0, dist_url='tcp://127.0.0.1:50152', opts=['MODEL.DEVICE', 'cuda:0'])
+[12/01 00:00:15] fastreid INFO: Contents of args.config_file=/home/zyl/fast-reid/projects/FastFace/configs/r50_ir.yml:
+_BASE_: face_base.yml
+
+MODEL:
+
+  BACKBONE:
+    DEPTH: 50x
+    FEAT_DIM: 25088 # 512x7x7
+    DROPOUT: 0.
+
+  HEADS:
+    PFC:
+      ENABLED: True
+
+OUTPUT_DIR: projects/FastFace/logs/pfc0.1_insightface
+
+[12/01 00:00:15] fastreid INFO: Running with full config:
+CUDNN_BENCHMARK: True
+DATALOADER:
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 8
+  SAMPLER_TRAIN: TrainingSampler
+  SET_WEIGHT: []
+DATASETS:
+  COMBINEALL: False
+  NAMES: ('MS1MV2',)
+  REC_PATH: /home/zyl/facedataset/faces_emore/train.rec
+  TESTS: ('CFP_FP', 'AgeDB_30', 'LFW')
+INPUT:
+  AFFINE:
+    ENABLED: False
+  AUGMIX:
+    ENABLED: False
+    PROB: 0.0
+  AUTOAUG:
+    ENABLED: False
+    PROB: 0.0
+  CJ:
+    BRIGHTNESS: 0.15
+    CONTRAST: 0.15
+    ENABLED: False
+    HUE: 0.1
+    PROB: 0.5
+    SATURATION: 0.1
+  CROP:
+    ENABLED: False
+    RATIO: [0.75, 1.3333333333333333]
+    SCALE: [0.16, 1]
+    SIZE: [224, 224]
+  FLIP:
+    ENABLED: True
+    PROB: 0.5
+  PADDING:
+    ENABLED: False
+    MODE: constant
+    SIZE: 10
+  REA:
+    ENABLED: False
+    PROB: 0.5
+    VALUE: [123.675, 116.28, 103.53]
+  RPT:
+    ENABLED: False
+    PROB: 0.5
+  SIZE_TEST: [0]
+  SIZE_TRAIN: [0]
+KD:
+  EMA:
+    ENABLED: False
+    MOMENTUM: 0.999
+  MODEL_CONFIG: []
+  MODEL_WEIGHTS: []
+MODEL:
+  BACKBONE:
+    ATT_DROP_RATE: 0.0
+    DEPTH: 50x
+    DROPOUT: 0.0
+    DROP_PATH_RATIO: 0.1
+    DROP_RATIO: 0.0
+    FEAT_DIM: 25088
+    LAST_STRIDE: 1
+    NAME: build_iresnet_backbone
+    NORM: BN
+    PRETRAIN: False
+    PRETRAIN_PATH: 
+    SIE_COE: 3.0
+    STRIDE_SIZE: (16, 16)
+    WITH_IBN: False
+    WITH_NL: False
+    WITH_SE: False
+  DEVICE: cuda:0
+  FREEZE_LAYERS: []
+  HEADS:
+    CLS_LAYER: CosSoftmax
+    EMBEDDING_DIM: 512
+    MARGIN: 0.4
+    NAME: FaceHead
+    NECK_FEAT: after
+    NORM: BN
+    NUM_CLASSES: 360232
+    PFC:
+      ENABLED: True
+      SAMPLE_RATE: 0.1
+    POOL_LAYER: Flatten
+    SCALE: 64
+    WITH_BNNECK: True
+  LOSSES:
+    CE:
+      ALPHA: 0.2
+      EPSILON: 0.0
+      SCALE: 1.0
+    CIRCLE:
+      GAMMA: 128
+      MARGIN: 0.25
+      SCALE: 1.0
+    COSFACE:
+      GAMMA: 128
+      MARGIN: 0.25
+      SCALE: 1.0
+    FL:
+      ALPHA: 0.25
+      GAMMA: 2
+      SCALE: 1.0
+    NAME: ('CrossEntropyLoss',)
+    TRI:
+      HARD_MINING: False
+      MARGIN: 0.3
+      NORM_FEAT: False
+      SCALE: 1.0
+  META_ARCHITECTURE: FaceBaseline
+  PIXEL_MEAN: [127.5, 127.5, 127.5]
+  PIXEL_STD: [127.5, 127.5, 127.5]
+  QUEUE_SIZE: 8192
+  WEIGHTS: 
+OUTPUT_DIR: projects/FastFace/logs/pfc0.1_insightface
+SOLVER:
+  AMP:
+    ENABLED: True
+  BASE_LR: 0.05
+  BIAS_LR_FACTOR: 1.0
+  CHECKPOINT_PERIOD: 1
+  CLIP_GRADIENTS:
+    CLIP_TYPE: norm
+    CLIP_VALUE: 5.0
+    ENABLED: False
+    NORM_TYPE: 2.0
+  DELAY_EPOCHS: 0
+  ETA_MIN_LR: 1e-07
+  FREEZE_ITERS: 0
+  GAMMA: 0.1
+  HEADS_LR_FACTOR: 1.0
+  IMS_PER_BATCH: 256
+  MAX_EPOCH: 20
+  MOMENTUM: 0.9
+  NESTEROV: False
+  OPT: SGD
+  SCHED: MultiStepLR
+  STEPS: [8, 12, 15, 18]
+  WARMUP_FACTOR: 0.1
+  WARMUP_ITERS: 0
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+  WEIGHT_DECAY_NORM: 0.0005
+TEST:
+  AQE:
+    ALPHA: 3.0
+    ENABLED: False
+    QE_K: 5
+    QE_TIME: 1
+  EVAL_PERIOD: 1
+  FLIP:
+    ENABLED: False
+  IMS_PER_BATCH: 1024
+  METRIC: cosine
+  PRECISE_BN:
+    DATASET: Market1501
+    ENABLED: False
+    NUM_ITER: 300
+  RERANK:
+    ENABLED: False
+    K1: 20
+    K2: 6
+    LAMBDA: 0.3
+  ROC:
+    ENABLED: False
+[12/01 00:00:16] fastreid INFO: Full config saved to /home/zyl/fast-reid/projects/FastFace/logs/pfc0.1_insightface/config.yaml
+[12/01 00:00:16] fastreid.utils.env INFO: Using a generated random seed 16166169
+[12/01 00:00:16] fastreid.face_data INFO: loading recordio /home/zyl/facedataset/faces_emore/train.rec...
+[12/01 00:00:21] fastreid.face_data INFO: Number of Samples: 5822653, Number of Classes: 85742
+[12/01 00:00:21] fastreid.data.build INFO: Using training sampler TrainingSampler
+[12/01 00:01:23] fastreid.engine.defaults INFO: Model:
+FaceBaseline(
+  (backbone): IResNet(
+    (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (prelu): PReLU(num_parameters=64)
+    (layer1): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 64, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer2): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (3): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer3): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (3): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (4): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (5): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (6): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (7): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (8): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (9): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (10): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (11): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (12): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (13): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer4): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (dropout): Dropout(p=0.0, inplace=True)
+  )
+  (heads): FaceHead(
+    (pool_layer): Flatten()
+    (bottleneck): Sequential(
+      (0): Conv2d(25088, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (cls_layer): CosSoftmax(num_classes=360232, scale=64, margin=0.4)
+  )
+)
+[12/01 00:01:23] fastreid.partial_fc INFO: softmax weight init successfully!
+[12/01 00:01:23] fastreid.partial_fc INFO: softmax weight mom init successfully!
+[12/01 00:10:38] fastreid INFO: Rank of current process: 0. World size: 1
+[12/01 00:10:39] fastreid INFO: Environment info:
+----------------------  ---------------------------------------------------------------
+sys.platform            linux
+Python                  3.9.5 (default, Jun  4 2021, 12:28:51) [GCC 7.5.0]
+numpy                   1.21.3
+fastreid                1.3 @/home/zyl/fast-reid/./fastreid
+FASTREID_ENV_MODULE     <not set>
+PyTorch                 1.9.0 @/home/zyl/enter/lib/python3.9/site-packages/torch
+PyTorch debug build     False
+GPU available           True
+GPU 0                   GeForce GTX 1050 Ti
+CUDA_HOME               /usr/local/cuda-11.1
+Pillow                  8.3.1
+torchvision             0.10.0 @/home/zyl/enter/lib/python3.9/site-packages/torchvision
+torchvision arch flags  sm_35, sm_50, sm_60, sm_70, sm_75, sm_80, sm_86
+fvcore                  0.1.5.post20211023
+cv2                     4.5.4-dev
+----------------------  ---------------------------------------------------------------
+PyTorch built with:
+  - GCC 7.3
+  - C++ Version: 201402
+  - Intel(R) oneAPI Math Kernel Library Version 2021.3-Product Build 20210617 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v2.1.2 (Git Hash 98be7e8afa711dc9b66c8ff3504129cb82013cdb)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 11.1
+  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_37,code=compute_37
+  - CuDNN 8.0.5
+  - Magma 2.5.2
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.1, CUDNN_VERSION=8.0.5, CXX_COMPILER=/opt/rh/devtoolset-7/root/usr/bin/c++, CXX_FLAGS= -Wno-deprecated -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -fopenmp -DNDEBUG -DUSE_KINETO -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wno-narrowing -Wall -Wextra -Werror=return-type -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-result -Wno-unused-local-typedefs -Wno-strict-overflow -Wno-strict-aliasing -Wno-error=deprecated-declarations -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=redundant-decls -Wno-error=old-style-cast -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=1.9.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, 
+
+[12/01 00:10:39] fastreid INFO: Command line arguments: Namespace(config_file='/home/zyl/fast-reid/projects/FastFace/configs/r50_ir.yml', resume=False, eval_only=False, num_gpus=1, num_machines=1, machine_rank=0, dist_url='tcp://127.0.0.1:50152', opts=['MODEL.DEVICE', 'cuda:0'])
+[12/01 00:10:39] fastreid INFO: Contents of args.config_file=/home/zyl/fast-reid/projects/FastFace/configs/r50_ir.yml:
+_BASE_: face_base.yml
+
+MODEL:
+
+  BACKBONE:
+    DEPTH: 50x
+    FEAT_DIM: 25088 # 512x7x7
+    DROPOUT: 0.
+
+  HEADS:
+    PFC:
+      ENABLED: True
+
+OUTPUT_DIR: projects/FastFace/logs/pfc0.1_insightface
+
+[12/01 00:10:39] fastreid INFO: Running with full config:
+CUDNN_BENCHMARK: True
+DATALOADER:
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 4
+  SAMPLER_TRAIN: TrainingSampler
+  SET_WEIGHT: []
+DATASETS:
+  COMBINEALL: False
+  NAMES: ('MS1MV2',)
+  REC_PATH: /home/zyl/facedataset/faces_emore/train.rec
+  TESTS: ('CFP_FP', 'AgeDB_30', 'LFW')
+INPUT:
+  AFFINE:
+    ENABLED: False
+  AUGMIX:
+    ENABLED: False
+    PROB: 0.0
+  AUTOAUG:
+    ENABLED: False
+    PROB: 0.0
+  CJ:
+    BRIGHTNESS: 0.15
+    CONTRAST: 0.15
+    ENABLED: False
+    HUE: 0.1
+    PROB: 0.5
+    SATURATION: 0.1
+  CROP:
+    ENABLED: False
+    RATIO: [0.75, 1.3333333333333333]
+    SCALE: [0.16, 1]
+    SIZE: [224, 224]
+  FLIP:
+    ENABLED: True
+    PROB: 0.5
+  PADDING:
+    ENABLED: False
+    MODE: constant
+    SIZE: 10
+  REA:
+    ENABLED: False
+    PROB: 0.5
+    VALUE: [123.675, 116.28, 103.53]
+  RPT:
+    ENABLED: False
+    PROB: 0.5
+  SIZE_TEST: [0]
+  SIZE_TRAIN: [0]
+KD:
+  EMA:
+    ENABLED: False
+    MOMENTUM: 0.999
+  MODEL_CONFIG: []
+  MODEL_WEIGHTS: []
+MODEL:
+  BACKBONE:
+    ATT_DROP_RATE: 0.0
+    DEPTH: 50x
+    DROPOUT: 0.0
+    DROP_PATH_RATIO: 0.1
+    DROP_RATIO: 0.0
+    FEAT_DIM: 25088
+    LAST_STRIDE: 1
+    NAME: build_iresnet_backbone
+    NORM: BN
+    PRETRAIN: False
+    PRETRAIN_PATH: 
+    SIE_COE: 3.0
+    STRIDE_SIZE: (16, 16)
+    WITH_IBN: False
+    WITH_NL: False
+    WITH_SE: False
+  DEVICE: cuda:0
+  FREEZE_LAYERS: []
+  HEADS:
+    CLS_LAYER: CosSoftmax
+    EMBEDDING_DIM: 512
+    MARGIN: 0.4
+    NAME: FaceHead
+    NECK_FEAT: after
+    NORM: BN
+    NUM_CLASSES: 360232
+    PFC:
+      ENABLED: True
+      SAMPLE_RATE: 0.1
+    POOL_LAYER: Flatten
+    SCALE: 64
+    WITH_BNNECK: True
+  LOSSES:
+    CE:
+      ALPHA: 0.2
+      EPSILON: 0.0
+      SCALE: 1.0
+    CIRCLE:
+      GAMMA: 128
+      MARGIN: 0.25
+      SCALE: 1.0
+    COSFACE:
+      GAMMA: 128
+      MARGIN: 0.25
+      SCALE: 1.0
+    FL:
+      ALPHA: 0.25
+      GAMMA: 2
+      SCALE: 1.0
+    NAME: ('CrossEntropyLoss',)
+    TRI:
+      HARD_MINING: False
+      MARGIN: 0.3
+      NORM_FEAT: False
+      SCALE: 1.0
+  META_ARCHITECTURE: FaceBaseline
+  PIXEL_MEAN: [127.5, 127.5, 127.5]
+  PIXEL_STD: [127.5, 127.5, 127.5]
+  QUEUE_SIZE: 8192
+  WEIGHTS: 
+OUTPUT_DIR: projects/FastFace/logs/pfc0.1_insightface
+SOLVER:
+  AMP:
+    ENABLED: True
+  BASE_LR: 0.05
+  BIAS_LR_FACTOR: 1.0
+  CHECKPOINT_PERIOD: 1
+  CLIP_GRADIENTS:
+    CLIP_TYPE: norm
+    CLIP_VALUE: 5.0
+    ENABLED: False
+    NORM_TYPE: 2.0
+  DELAY_EPOCHS: 0
+  ETA_MIN_LR: 1e-07
+  FREEZE_ITERS: 0
+  GAMMA: 0.1
+  HEADS_LR_FACTOR: 1.0
+  IMS_PER_BATCH: 256
+  MAX_EPOCH: 20
+  MOMENTUM: 0.9
+  NESTEROV: False
+  OPT: SGD
+  SCHED: MultiStepLR
+  STEPS: [8, 12, 15, 18]
+  WARMUP_FACTOR: 0.1
+  WARMUP_ITERS: 0
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+  WEIGHT_DECAY_NORM: 0.0005
+TEST:
+  AQE:
+    ALPHA: 3.0
+    ENABLED: False
+    QE_K: 5
+    QE_TIME: 1
+  EVAL_PERIOD: 1
+  FLIP:
+    ENABLED: False
+  IMS_PER_BATCH: 1024
+  METRIC: cosine
+  PRECISE_BN:
+    DATASET: Market1501
+    ENABLED: False
+    NUM_ITER: 300
+  RERANK:
+    ENABLED: False
+    K1: 20
+    K2: 6
+    LAMBDA: 0.3
+  ROC:
+    ENABLED: False
+[12/01 00:10:39] fastreid INFO: Full config saved to /home/zyl/fast-reid/projects/FastFace/logs/pfc0.1_insightface/config.yaml
+[12/01 00:10:39] fastreid.utils.env INFO: Using a generated random seed 39447075
+[12/01 00:10:39] fastreid.face_data INFO: loading recordio /home/zyl/facedataset/faces_emore/train.rec...
+[12/01 00:10:43] fastreid.face_data INFO: Number of Samples: 5822653, Number of Classes: 85742
+[12/01 00:10:43] fastreid.data.build INFO: Using training sampler TrainingSampler
+[12/01 00:10:49] fastreid.engine.defaults INFO: Model:
+FaceBaseline(
+  (backbone): IResNet(
+    (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (prelu): PReLU(num_parameters=64)
+    (layer1): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 64, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer2): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (3): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer3): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (3): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (4): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (5): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (6): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (7): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (8): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (9): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (10): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (11): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (12): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (13): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer4): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (dropout): Dropout(p=0.0, inplace=True)
+  )
+  (heads): FaceHead(
+    (pool_layer): Flatten()
+    (bottleneck): Sequential(
+      (0): Conv2d(25088, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (cls_layer): CosSoftmax(num_classes=360232, scale=64, margin=0.4)
+  )
+)
+[12/01 00:10:49] fastreid.partial_fc INFO: softmax weight init successfully!
+[12/01 00:10:49] fastreid.partial_fc INFO: softmax weight mom init successfully!
+[12/01 00:11:18] fastreid.utils.checkpoint INFO: No checkpoint found. Training model from scratch
+[12/01 00:11:18] fastreid.utils.checkpoint INFO: No checkpoint found. Training model from scratch
+[12/01 00:11:18] fastreid.engine.train_loop INFO: Starting training from epoch 0
+[12/01 00:11:21] fastreid.engine.train_loop ERROR: Exception during training:
+Traceback (most recent call last):
+  File "/home/zyl/fast-reid/./fastreid/engine/train_loop.py", line 145, in train
+    self.run_step()
+  File "/home/zyl/fast-reid/./fastreid/engine/defaults.py", line 357, in run_step
+    self._trainer.run_step()
+  File "/home/zyl/fast-reid/projects/FastFace/fastface/trainer.py", line 184, in run_step
+    features, targets = self.model(data)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/zyl/fast-reid/projects/FastFace/fastface/modeling/face_baseline.py", line 25, in forward
+    features = self.backbone(images)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/zyl/fast-reid/projects/FastFace/fastface/modeling/iresnet.py", line 146, in forward
+    x = self.layer1(x)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/container.py", line 139, in forward
+    input = module(input)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/zyl/fast-reid/projects/FastFace/fastface/modeling/iresnet.py", line 50, in forward
+    out = self.bn1(x)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/batchnorm.py", line 167, in forward
+    return F.batch_norm(
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/functional.py", line 2281, in batch_norm
+    return torch.batch_norm(
+RuntimeError: CUDA out of memory. Tried to allocate 392.00 MiB (GPU 0; 3.94 GiB total capacity; 2.94 GiB already allocated; 45.62 MiB free; 2.95 GiB reserved in total by PyTorch)
+[12/01 00:11:21] fastreid.engine.hooks INFO: Total training time: 0:00:03 (0:00:00 on hooks)
+[12/01 00:12:26] fastreid INFO: Rank of current process: 0. World size: 1
+[12/01 00:12:26] fastreid INFO: Environment info:
+----------------------  ---------------------------------------------------------------
+sys.platform            linux
+Python                  3.9.5 (default, Jun  4 2021, 12:28:51) [GCC 7.5.0]
+numpy                   1.21.3
+fastreid                1.3 @/home/zyl/fast-reid/./fastreid
+FASTREID_ENV_MODULE     <not set>
+PyTorch                 1.9.0 @/home/zyl/enter/lib/python3.9/site-packages/torch
+PyTorch debug build     False
+GPU available           True
+GPU 0                   GeForce GTX 1050 Ti
+CUDA_HOME               /usr/local/cuda-11.1
+Pillow                  8.3.1
+torchvision             0.10.0 @/home/zyl/enter/lib/python3.9/site-packages/torchvision
+torchvision arch flags  sm_35, sm_50, sm_60, sm_70, sm_75, sm_80, sm_86
+fvcore                  0.1.5.post20211023
+cv2                     4.5.4-dev
+----------------------  ---------------------------------------------------------------
+PyTorch built with:
+  - GCC 7.3
+  - C++ Version: 201402
+  - Intel(R) oneAPI Math Kernel Library Version 2021.3-Product Build 20210617 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v2.1.2 (Git Hash 98be7e8afa711dc9b66c8ff3504129cb82013cdb)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 11.1
+  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_37,code=compute_37
+  - CuDNN 8.0.5
+  - Magma 2.5.2
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.1, CUDNN_VERSION=8.0.5, CXX_COMPILER=/opt/rh/devtoolset-7/root/usr/bin/c++, CXX_FLAGS= -Wno-deprecated -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -fopenmp -DNDEBUG -DUSE_KINETO -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wno-narrowing -Wall -Wextra -Werror=return-type -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-result -Wno-unused-local-typedefs -Wno-strict-overflow -Wno-strict-aliasing -Wno-error=deprecated-declarations -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=redundant-decls -Wno-error=old-style-cast -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=1.9.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, 
+
+[12/01 00:12:26] fastreid INFO: Command line arguments: Namespace(config_file='/home/zyl/fast-reid/projects/FastFace/configs/r50_ir.yml', resume=False, eval_only=False, num_gpus=1, num_machines=1, machine_rank=0, dist_url='tcp://127.0.0.1:50152', opts=['MODEL.DEVICE', 'cuda:0'])
+[12/01 00:12:26] fastreid INFO: Contents of args.config_file=/home/zyl/fast-reid/projects/FastFace/configs/r50_ir.yml:
+_BASE_: face_base.yml
+
+MODEL:
+
+  BACKBONE:
+    DEPTH: 50x
+    FEAT_DIM: 25088 # 512x7x7
+    DROPOUT: 0.
+
+  HEADS:
+    PFC:
+      ENABLED: True
+
+OUTPUT_DIR: projects/FastFace/logs/pfc0.1_insightface
+
+[12/01 00:12:26] fastreid INFO: Running with full config:
+CUDNN_BENCHMARK: True
+DATALOADER:
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 4
+  SAMPLER_TRAIN: TrainingSampler
+  SET_WEIGHT: []
+DATASETS:
+  COMBINEALL: False
+  NAMES: ('MS1MV2',)
+  REC_PATH: /home/zyl/facedataset/faces_emore/train.rec
+  TESTS: ('CFP_FP', 'AgeDB_30', 'LFW')
+INPUT:
+  AFFINE:
+    ENABLED: False
+  AUGMIX:
+    ENABLED: False
+    PROB: 0.0
+  AUTOAUG:
+    ENABLED: False
+    PROB: 0.0
+  CJ:
+    BRIGHTNESS: 0.15
+    CONTRAST: 0.15
+    ENABLED: False
+    HUE: 0.1
+    PROB: 0.5
+    SATURATION: 0.1
+  CROP:
+    ENABLED: False
+    RATIO: [0.75, 1.3333333333333333]
+    SCALE: [0.16, 1]
+    SIZE: [224, 224]
+  FLIP:
+    ENABLED: True
+    PROB: 0.5
+  PADDING:
+    ENABLED: False
+    MODE: constant
+    SIZE: 10
+  REA:
+    ENABLED: False
+    PROB: 0.5
+    VALUE: [123.675, 116.28, 103.53]
+  RPT:
+    ENABLED: False
+    PROB: 0.5
+  SIZE_TEST: [0]
+  SIZE_TRAIN: [0]
+KD:
+  EMA:
+    ENABLED: False
+    MOMENTUM: 0.999
+  MODEL_CONFIG: []
+  MODEL_WEIGHTS: []
+MODEL:
+  BACKBONE:
+    ATT_DROP_RATE: 0.0
+    DEPTH: 50x
+    DROPOUT: 0.0
+    DROP_PATH_RATIO: 0.1
+    DROP_RATIO: 0.0
+    FEAT_DIM: 25088
+    LAST_STRIDE: 1
+    NAME: build_iresnet_backbone
+    NORM: BN
+    PRETRAIN: False
+    PRETRAIN_PATH: 
+    SIE_COE: 3.0
+    STRIDE_SIZE: (16, 16)
+    WITH_IBN: False
+    WITH_NL: False
+    WITH_SE: False
+  DEVICE: cuda:0
+  FREEZE_LAYERS: []
+  HEADS:
+    CLS_LAYER: CosSoftmax
+    EMBEDDING_DIM: 512
+    MARGIN: 0.4
+    NAME: FaceHead
+    NECK_FEAT: after
+    NORM: BN
+    NUM_CLASSES: 360232
+    PFC:
+      ENABLED: True
+      SAMPLE_RATE: 0.1
+    POOL_LAYER: Flatten
+    SCALE: 64
+    WITH_BNNECK: True
+  LOSSES:
+    CE:
+      ALPHA: 0.2
+      EPSILON: 0.0
+      SCALE: 1.0
+    CIRCLE:
+      GAMMA: 128
+      MARGIN: 0.25
+      SCALE: 1.0
+    COSFACE:
+      GAMMA: 128
+      MARGIN: 0.25
+      SCALE: 1.0
+    FL:
+      ALPHA: 0.25
+      GAMMA: 2
+      SCALE: 1.0
+    NAME: ('CrossEntropyLoss',)
+    TRI:
+      HARD_MINING: False
+      MARGIN: 0.3
+      NORM_FEAT: False
+      SCALE: 1.0
+  META_ARCHITECTURE: FaceBaseline
+  PIXEL_MEAN: [127.5, 127.5, 127.5]
+  PIXEL_STD: [127.5, 127.5, 127.5]
+  QUEUE_SIZE: 8192
+  WEIGHTS: 
+OUTPUT_DIR: projects/FastFace/logs/pfc0.1_insightface
+SOLVER:
+  AMP:
+    ENABLED: True
+  BASE_LR: 0.05
+  BIAS_LR_FACTOR: 1.0
+  CHECKPOINT_PERIOD: 1
+  CLIP_GRADIENTS:
+    CLIP_TYPE: norm
+    CLIP_VALUE: 5.0
+    ENABLED: False
+    NORM_TYPE: 2.0
+  DELAY_EPOCHS: 0
+  ETA_MIN_LR: 1e-07
+  FREEZE_ITERS: 0
+  GAMMA: 0.1
+  HEADS_LR_FACTOR: 1.0
+  IMS_PER_BATCH: 256
+  MAX_EPOCH: 20
+  MOMENTUM: 0.9
+  NESTEROV: False
+  OPT: SGD
+  SCHED: MultiStepLR
+  STEPS: [8, 12, 15, 18]
+  WARMUP_FACTOR: 0.1
+  WARMUP_ITERS: 0
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+  WEIGHT_DECAY_NORM: 0.0005
+TEST:
+  AQE:
+    ALPHA: 3.0
+    ENABLED: False
+    QE_K: 5
+    QE_TIME: 1
+  EVAL_PERIOD: 1
+  FLIP:
+    ENABLED: False
+  IMS_PER_BATCH: 512
+  METRIC: cosine
+  PRECISE_BN:
+    DATASET: Market1501
+    ENABLED: False
+    NUM_ITER: 300
+  RERANK:
+    ENABLED: False
+    K1: 20
+    K2: 6
+    LAMBDA: 0.3
+  ROC:
+    ENABLED: False
+[12/01 00:12:26] fastreid INFO: Full config saved to /home/zyl/fast-reid/projects/FastFace/logs/pfc0.1_insightface/config.yaml
+[12/01 00:12:26] fastreid.utils.env INFO: Using a generated random seed 26914738
+[12/01 00:12:26] fastreid.face_data INFO: loading recordio /home/zyl/facedataset/faces_emore/train.rec...
+[12/01 00:12:30] fastreid.face_data INFO: Number of Samples: 5822653, Number of Classes: 85742
+[12/01 00:12:30] fastreid.data.build INFO: Using training sampler TrainingSampler
+[12/01 00:12:36] fastreid.engine.defaults INFO: Model:
+FaceBaseline(
+  (backbone): IResNet(
+    (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (prelu): PReLU(num_parameters=64)
+    (layer1): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 64, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer2): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (3): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer3): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (3): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (4): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (5): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (6): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (7): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (8): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (9): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (10): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (11): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (12): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (13): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer4): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (dropout): Dropout(p=0.0, inplace=True)
+  )
+  (heads): FaceHead(
+    (pool_layer): Flatten()
+    (bottleneck): Sequential(
+      (0): Conv2d(25088, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (cls_layer): CosSoftmax(num_classes=360232, scale=64, margin=0.4)
+  )
+)
+[12/01 00:12:36] fastreid.partial_fc INFO: softmax weight init successfully!
+[12/01 00:12:36] fastreid.partial_fc INFO: softmax weight mom init successfully!
+[12/01 00:12:52] fastreid.utils.checkpoint INFO: No checkpoint found. Training model from scratch
+[12/01 00:12:52] fastreid.utils.checkpoint INFO: No checkpoint found. Training model from scratch
+[12/01 00:12:52] fastreid.engine.train_loop INFO: Starting training from epoch 0
+[12/01 00:12:57] fastreid.engine.train_loop ERROR: Exception during training:
+Traceback (most recent call last):
+  File "/home/zyl/fast-reid/./fastreid/engine/train_loop.py", line 145, in train
+    self.run_step()
+  File "/home/zyl/fast-reid/./fastreid/engine/defaults.py", line 357, in run_step
+    self._trainer.run_step()
+  File "/home/zyl/fast-reid/projects/FastFace/fastface/trainer.py", line 184, in run_step
+    features, targets = self.model(data)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/zyl/fast-reid/projects/FastFace/fastface/modeling/face_baseline.py", line 25, in forward
+    features = self.backbone(images)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/zyl/fast-reid/projects/FastFace/fastface/modeling/iresnet.py", line 146, in forward
+    x = self.layer1(x)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/container.py", line 139, in forward
+    input = module(input)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/zyl/fast-reid/projects/FastFace/fastface/modeling/iresnet.py", line 50, in forward
+    out = self.bn1(x)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/batchnorm.py", line 167, in forward
+    return F.batch_norm(
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/functional.py", line 2281, in batch_norm
+    return torch.batch_norm(
+RuntimeError: CUDA out of memory. Tried to allocate 392.00 MiB (GPU 0; 3.94 GiB total capacity; 2.94 GiB already allocated; 39.62 MiB free; 2.95 GiB reserved in total by PyTorch)
+[12/01 00:12:57] fastreid.engine.hooks INFO: Total training time: 0:00:05 (0:00:00 on hooks)
+[12/01 00:19:06] fastreid INFO: Rank of current process: 0. World size: 1
+[12/01 00:19:06] fastreid INFO: Environment info:
+----------------------  ---------------------------------------------------------------
+sys.platform            linux
+Python                  3.9.5 (default, Jun  4 2021, 12:28:51) [GCC 7.5.0]
+numpy                   1.21.3
+fastreid                1.3 @/home/zyl/fast-reid/./fastreid
+FASTREID_ENV_MODULE     <not set>
+PyTorch                 1.9.0 @/home/zyl/enter/lib/python3.9/site-packages/torch
+PyTorch debug build     False
+GPU available           True
+GPU 0                   GeForce GTX 1050 Ti
+CUDA_HOME               /usr/local/cuda-11.1
+Pillow                  8.3.1
+torchvision             0.10.0 @/home/zyl/enter/lib/python3.9/site-packages/torchvision
+torchvision arch flags  sm_35, sm_50, sm_60, sm_70, sm_75, sm_80, sm_86
+fvcore                  0.1.5.post20211023
+cv2                     4.5.4-dev
+----------------------  ---------------------------------------------------------------
+PyTorch built with:
+  - GCC 7.3
+  - C++ Version: 201402
+  - Intel(R) oneAPI Math Kernel Library Version 2021.3-Product Build 20210617 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v2.1.2 (Git Hash 98be7e8afa711dc9b66c8ff3504129cb82013cdb)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 11.1
+  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_37,code=compute_37
+  - CuDNN 8.0.5
+  - Magma 2.5.2
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.1, CUDNN_VERSION=8.0.5, CXX_COMPILER=/opt/rh/devtoolset-7/root/usr/bin/c++, CXX_FLAGS= -Wno-deprecated -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -fopenmp -DNDEBUG -DUSE_KINETO -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wno-narrowing -Wall -Wextra -Werror=return-type -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-result -Wno-unused-local-typedefs -Wno-strict-overflow -Wno-strict-aliasing -Wno-error=deprecated-declarations -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=redundant-decls -Wno-error=old-style-cast -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=1.9.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, 
+
+[12/01 00:19:06] fastreid INFO: Command line arguments: Namespace(config_file='/home/zyl/fast-reid/projects/FastFace/configs/r50_ir.yml', resume=False, eval_only=False, num_gpus=1, num_machines=1, machine_rank=0, dist_url='tcp://127.0.0.1:50152', opts=[])
+[12/01 00:19:06] fastreid INFO: Contents of args.config_file=/home/zyl/fast-reid/projects/FastFace/configs/r50_ir.yml:
+_BASE_: face_base.yml
+
+MODEL:
+
+  BACKBONE:
+    DEPTH: 50x
+    FEAT_DIM: 25088 # 512x7x7
+    DROPOUT: 0.
+
+  HEADS:
+    PFC:
+      ENABLED: True
+
+OUTPUT_DIR: projects/FastFace/logs/pfc0.1_insightface
+
+[12/01 00:19:06] fastreid INFO: Running with full config:
+CUDNN_BENCHMARK: True
+DATALOADER:
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 4
+  SAMPLER_TRAIN: TrainingSampler
+  SET_WEIGHT: []
+DATASETS:
+  COMBINEALL: False
+  NAMES: ('MS1MV2',)
+  REC_PATH: /home/zyl/facedataset/faces_emore/train.rec
+  TESTS: ('CFP_FP', 'AgeDB_30', 'LFW')
+INPUT:
+  AFFINE:
+    ENABLED: False
+  AUGMIX:
+    ENABLED: False
+    PROB: 0.0
+  AUTOAUG:
+    ENABLED: False
+    PROB: 0.0
+  CJ:
+    BRIGHTNESS: 0.15
+    CONTRAST: 0.15
+    ENABLED: False
+    HUE: 0.1
+    PROB: 0.5
+    SATURATION: 0.1
+  CROP:
+    ENABLED: False
+    RATIO: [0.75, 1.3333333333333333]
+    SCALE: [0.16, 1]
+    SIZE: [224, 224]
+  FLIP:
+    ENABLED: True
+    PROB: 0.5
+  PADDING:
+    ENABLED: False
+    MODE: constant
+    SIZE: 10
+  REA:
+    ENABLED: False
+    PROB: 0.5
+    VALUE: [123.675, 116.28, 103.53]
+  RPT:
+    ENABLED: False
+    PROB: 0.5
+  SIZE_TEST: [0]
+  SIZE_TRAIN: [0]
+KD:
+  EMA:
+    ENABLED: False
+    MOMENTUM: 0.999
+  MODEL_CONFIG: []
+  MODEL_WEIGHTS: []
+MODEL:
+  BACKBONE:
+    ATT_DROP_RATE: 0.0
+    DEPTH: 50x
+    DROPOUT: 0.0
+    DROP_PATH_RATIO: 0.1
+    DROP_RATIO: 0.0
+    FEAT_DIM: 25088
+    LAST_STRIDE: 1
+    NAME: build_iresnet_backbone
+    NORM: BN
+    PRETRAIN: False
+    PRETRAIN_PATH: 
+    SIE_COE: 3.0
+    STRIDE_SIZE: (16, 16)
+    WITH_IBN: False
+    WITH_NL: False
+    WITH_SE: False
+  DEVICE: cuda
+  FREEZE_LAYERS: []
+  HEADS:
+    CLS_LAYER: CosSoftmax
+    EMBEDDING_DIM: 512
+    MARGIN: 0.4
+    NAME: FaceHead
+    NECK_FEAT: after
+    NORM: BN
+    NUM_CLASSES: 360232
+    PFC:
+      ENABLED: True
+      SAMPLE_RATE: 0.1
+    POOL_LAYER: Flatten
+    SCALE: 64
+    WITH_BNNECK: True
+  LOSSES:
+    CE:
+      ALPHA: 0.2
+      EPSILON: 0.0
+      SCALE: 1.0
+    CIRCLE:
+      GAMMA: 128
+      MARGIN: 0.25
+      SCALE: 1.0
+    COSFACE:
+      GAMMA: 128
+      MARGIN: 0.25
+      SCALE: 1.0
+    FL:
+      ALPHA: 0.25
+      GAMMA: 2
+      SCALE: 1.0
+    NAME: ('CrossEntropyLoss',)
+    TRI:
+      HARD_MINING: False
+      MARGIN: 0.3
+      NORM_FEAT: False
+      SCALE: 1.0
+  META_ARCHITECTURE: FaceBaseline
+  PIXEL_MEAN: [127.5, 127.5, 127.5]
+  PIXEL_STD: [127.5, 127.5, 127.5]
+  QUEUE_SIZE: 8192
+  WEIGHTS: 
+OUTPUT_DIR: projects/FastFace/logs/pfc0.1_insightface
+SOLVER:
+  AMP:
+    ENABLED: True
+  BASE_LR: 0.05
+  BIAS_LR_FACTOR: 1.0
+  CHECKPOINT_PERIOD: 1
+  CLIP_GRADIENTS:
+    CLIP_TYPE: norm
+    CLIP_VALUE: 5.0
+    ENABLED: False
+    NORM_TYPE: 2.0
+  DELAY_EPOCHS: 0
+  ETA_MIN_LR: 1e-07
+  FREEZE_ITERS: 0
+  GAMMA: 0.1
+  HEADS_LR_FACTOR: 1.0
+  IMS_PER_BATCH: 256
+  MAX_EPOCH: 20
+  MOMENTUM: 0.9
+  NESTEROV: False
+  OPT: SGD
+  SCHED: MultiStepLR
+  STEPS: [8, 12, 15, 18]
+  WARMUP_FACTOR: 0.1
+  WARMUP_ITERS: 0
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+  WEIGHT_DECAY_NORM: 0.0005
+TEST:
+  AQE:
+    ALPHA: 3.0
+    ENABLED: False
+    QE_K: 5
+    QE_TIME: 1
+  EVAL_PERIOD: 1
+  FLIP:
+    ENABLED: False
+  IMS_PER_BATCH: 512
+  METRIC: cosine
+  PRECISE_BN:
+    DATASET: Market1501
+    ENABLED: False
+    NUM_ITER: 300
+  RERANK:
+    ENABLED: False
+    K1: 20
+    K2: 6
+    LAMBDA: 0.3
+  ROC:
+    ENABLED: False
+[12/01 00:19:06] fastreid INFO: Full config saved to /home/zyl/fast-reid/projects/FastFace/logs/pfc0.1_insightface/config.yaml
+[12/01 00:19:06] fastreid.utils.env INFO: Using a generated random seed 6672073
+[12/01 00:19:06] fastreid.face_data INFO: loading recordio /home/zyl/facedataset/faces_emore/train.rec...
+[12/01 00:19:10] fastreid.face_data INFO: Number of Samples: 5822653, Number of Classes: 85742
+[12/01 00:19:10] fastreid.data.build INFO: Using training sampler TrainingSampler
+[12/01 00:19:16] fastreid.engine.defaults INFO: Model:
+FaceBaseline(
+  (backbone): IResNet(
+    (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (prelu): PReLU(num_parameters=64)
+    (layer1): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 64, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer2): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (3): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer3): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (3): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (4): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (5): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (6): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (7): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (8): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (9): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (10): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (11): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (12): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (13): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer4): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (dropout): Dropout(p=0.0, inplace=True)
+  )
+  (heads): FaceHead(
+    (pool_layer): Flatten()
+    (bottleneck): Sequential(
+      (0): Conv2d(25088, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (cls_layer): CosSoftmax(num_classes=360232, scale=64, margin=0.4)
+  )
+)
+[12/01 00:19:16] fastreid.partial_fc INFO: softmax weight init successfully!
+[12/01 00:19:16] fastreid.partial_fc INFO: softmax weight mom init successfully!
+[12/01 00:19:28] fastreid.utils.checkpoint INFO: No checkpoint found. Training model from scratch
+[12/01 00:19:28] fastreid.utils.checkpoint INFO: No checkpoint found. Training model from scratch
+[12/01 00:19:28] fastreid.engine.train_loop INFO: Starting training from epoch 0
+[12/01 00:19:35] fastreid.engine.train_loop ERROR: Exception during training:
+Traceback (most recent call last):
+  File "/home/zyl/fast-reid/./fastreid/engine/train_loop.py", line 145, in train
+    self.run_step()
+  File "/home/zyl/fast-reid/./fastreid/engine/defaults.py", line 357, in run_step
+    self._trainer.run_step()
+  File "/home/zyl/fast-reid/projects/FastFace/fastface/trainer.py", line 184, in run_step
+    features, targets = self.model(data)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/zyl/fast-reid/projects/FastFace/fastface/modeling/face_baseline.py", line 25, in forward
+    features = self.backbone(images)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/zyl/fast-reid/projects/FastFace/fastface/modeling/iresnet.py", line 146, in forward
+    x = self.layer1(x)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/container.py", line 139, in forward
+    input = module(input)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/zyl/fast-reid/projects/FastFace/fastface/modeling/iresnet.py", line 50, in forward
+    out = self.bn1(x)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/batchnorm.py", line 167, in forward
+    return F.batch_norm(
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/functional.py", line 2281, in batch_norm
+    return torch.batch_norm(
+RuntimeError: CUDA out of memory. Tried to allocate 392.00 MiB (GPU 0; 3.94 GiB total capacity; 2.94 GiB already allocated; 60.50 MiB free; 2.95 GiB reserved in total by PyTorch)
+[12/01 00:19:35] fastreid.engine.hooks INFO: Total training time: 0:00:07 (0:00:00 on hooks)
+[12/01 00:21:24] fastreid INFO: Rank of current process: 0. World size: 1
+[12/01 00:21:25] fastreid INFO: Environment info:
+----------------------  ---------------------------------------------------------------
+sys.platform            linux
+Python                  3.9.5 (default, Jun  4 2021, 12:28:51) [GCC 7.5.0]
+numpy                   1.21.3
+fastreid                1.3 @/home/zyl/fast-reid/./fastreid
+FASTREID_ENV_MODULE     <not set>
+PyTorch                 1.9.0 @/home/zyl/enter/lib/python3.9/site-packages/torch
+PyTorch debug build     False
+GPU available           True
+GPU 0                   GeForce GTX 1050 Ti
+CUDA_HOME               /usr/local/cuda-11.1
+Pillow                  8.3.1
+torchvision             0.10.0 @/home/zyl/enter/lib/python3.9/site-packages/torchvision
+torchvision arch flags  sm_35, sm_50, sm_60, sm_70, sm_75, sm_80, sm_86
+fvcore                  0.1.5.post20211023
+cv2                     4.5.4-dev
+----------------------  ---------------------------------------------------------------
+PyTorch built with:
+  - GCC 7.3
+  - C++ Version: 201402
+  - Intel(R) oneAPI Math Kernel Library Version 2021.3-Product Build 20210617 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v2.1.2 (Git Hash 98be7e8afa711dc9b66c8ff3504129cb82013cdb)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 11.1
+  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_37,code=compute_37
+  - CuDNN 8.0.5
+  - Magma 2.5.2
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.1, CUDNN_VERSION=8.0.5, CXX_COMPILER=/opt/rh/devtoolset-7/root/usr/bin/c++, CXX_FLAGS= -Wno-deprecated -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -fopenmp -DNDEBUG -DUSE_KINETO -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wno-narrowing -Wall -Wextra -Werror=return-type -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-result -Wno-unused-local-typedefs -Wno-strict-overflow -Wno-strict-aliasing -Wno-error=deprecated-declarations -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=redundant-decls -Wno-error=old-style-cast -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=1.9.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, 
+
+[12/01 00:21:25] fastreid INFO: Command line arguments: Namespace(config_file='/home/zyl/fast-reid/projects/FastFace/configs/r34_ir.yml', resume=False, eval_only=False, num_gpus=1, num_machines=1, machine_rank=0, dist_url='tcp://127.0.0.1:50152', opts=['MODEL.DEVICE', 'cuda:0'])
+[12/01 00:21:25] fastreid INFO: Contents of args.config_file=/home/zyl/fast-reid/projects/FastFace/configs/r34_ir.yml:
+_BASE_: face_base.yml
+
+MODEL:
+
+  BACKBONE:
+    DEPTH: 34x
+    FEAT_DIM: 25088 # 512x7x7
+    DROPOUT: 0.
+
+  HEADS:
+    PFC:
+      ENABLED: True
+
+OUTPUT_DIR: projects/FastFace/logs/pfc0.1_insightface
+
+[12/01 00:21:25] fastreid INFO: Running with full config:
+CUDNN_BENCHMARK: True
+DATALOADER:
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 4
+  SAMPLER_TRAIN: TrainingSampler
+  SET_WEIGHT: []
+DATASETS:
+  COMBINEALL: False
+  NAMES: ('MS1MV2',)
+  REC_PATH: /home/zyl/facedataset/faces_emore/train.rec
+  TESTS: ('CFP_FP', 'AgeDB_30', 'LFW')
+INPUT:
+  AFFINE:
+    ENABLED: False
+  AUGMIX:
+    ENABLED: False
+    PROB: 0.0
+  AUTOAUG:
+    ENABLED: False
+    PROB: 0.0
+  CJ:
+    BRIGHTNESS: 0.15
+    CONTRAST: 0.15
+    ENABLED: False
+    HUE: 0.1
+    PROB: 0.5
+    SATURATION: 0.1
+  CROP:
+    ENABLED: False
+    RATIO: [0.75, 1.3333333333333333]
+    SCALE: [0.16, 1]
+    SIZE: [224, 224]
+  FLIP:
+    ENABLED: True
+    PROB: 0.5
+  PADDING:
+    ENABLED: False
+    MODE: constant
+    SIZE: 10
+  REA:
+    ENABLED: False
+    PROB: 0.5
+    VALUE: [123.675, 116.28, 103.53]
+  RPT:
+    ENABLED: False
+    PROB: 0.5
+  SIZE_TEST: [0]
+  SIZE_TRAIN: [0]
+KD:
+  EMA:
+    ENABLED: False
+    MOMENTUM: 0.999
+  MODEL_CONFIG: []
+  MODEL_WEIGHTS: []
+MODEL:
+  BACKBONE:
+    ATT_DROP_RATE: 0.0
+    DEPTH: 34x
+    DROPOUT: 0.0
+    DROP_PATH_RATIO: 0.1
+    DROP_RATIO: 0.0
+    FEAT_DIM: 25088
+    LAST_STRIDE: 1
+    NAME: build_iresnet_backbone
+    NORM: BN
+    PRETRAIN: False
+    PRETRAIN_PATH: 
+    SIE_COE: 3.0
+    STRIDE_SIZE: (16, 16)
+    WITH_IBN: False
+    WITH_NL: False
+    WITH_SE: False
+  DEVICE: cuda:0
+  FREEZE_LAYERS: []
+  HEADS:
+    CLS_LAYER: CosSoftmax
+    EMBEDDING_DIM: 512
+    MARGIN: 0.4
+    NAME: FaceHead
+    NECK_FEAT: after
+    NORM: BN
+    NUM_CLASSES: 360232
+    PFC:
+      ENABLED: True
+      SAMPLE_RATE: 0.1
+    POOL_LAYER: Flatten
+    SCALE: 64
+    WITH_BNNECK: True
+  LOSSES:
+    CE:
+      ALPHA: 0.2
+      EPSILON: 0.0
+      SCALE: 1.0
+    CIRCLE:
+      GAMMA: 128
+      MARGIN: 0.25
+      SCALE: 1.0
+    COSFACE:
+      GAMMA: 128
+      MARGIN: 0.25
+      SCALE: 1.0
+    FL:
+      ALPHA: 0.25
+      GAMMA: 2
+      SCALE: 1.0
+    NAME: ('CrossEntropyLoss',)
+    TRI:
+      HARD_MINING: False
+      MARGIN: 0.3
+      NORM_FEAT: False
+      SCALE: 1.0
+  META_ARCHITECTURE: FaceBaseline
+  PIXEL_MEAN: [127.5, 127.5, 127.5]
+  PIXEL_STD: [127.5, 127.5, 127.5]
+  QUEUE_SIZE: 8192
+  WEIGHTS: 
+OUTPUT_DIR: projects/FastFace/logs/pfc0.1_insightface
+SOLVER:
+  AMP:
+    ENABLED: True
+  BASE_LR: 0.05
+  BIAS_LR_FACTOR: 1.0
+  CHECKPOINT_PERIOD: 1
+  CLIP_GRADIENTS:
+    CLIP_TYPE: norm
+    CLIP_VALUE: 5.0
+    ENABLED: False
+    NORM_TYPE: 2.0
+  DELAY_EPOCHS: 0
+  ETA_MIN_LR: 1e-07
+  FREEZE_ITERS: 0
+  GAMMA: 0.1
+  HEADS_LR_FACTOR: 1.0
+  IMS_PER_BATCH: 256
+  MAX_EPOCH: 20
+  MOMENTUM: 0.9
+  NESTEROV: False
+  OPT: SGD
+  SCHED: MultiStepLR
+  STEPS: [8, 12, 15, 18]
+  WARMUP_FACTOR: 0.1
+  WARMUP_ITERS: 0
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+  WEIGHT_DECAY_NORM: 0.0005
+TEST:
+  AQE:
+    ALPHA: 3.0
+    ENABLED: False
+    QE_K: 5
+    QE_TIME: 1
+  EVAL_PERIOD: 1
+  FLIP:
+    ENABLED: False
+  IMS_PER_BATCH: 512
+  METRIC: cosine
+  PRECISE_BN:
+    DATASET: Market1501
+    ENABLED: False
+    NUM_ITER: 300
+  RERANK:
+    ENABLED: False
+    K1: 20
+    K2: 6
+    LAMBDA: 0.3
+  ROC:
+    ENABLED: False
+[12/01 00:21:25] fastreid INFO: Full config saved to /home/zyl/fast-reid/projects/FastFace/logs/pfc0.1_insightface/config.yaml
+[12/01 00:21:25] fastreid.utils.env INFO: Using a generated random seed 25242233
+[12/01 00:21:25] fastreid.face_data INFO: loading recordio /home/zyl/facedataset/faces_emore/train.rec...
+[12/01 00:21:29] fastreid.face_data INFO: Number of Samples: 5822653, Number of Classes: 85742
+[12/01 00:21:29] fastreid.data.build INFO: Using training sampler TrainingSampler
+[12/01 00:21:38] fastreid.engine.defaults INFO: Model:
+FaceBaseline(
+  (backbone): IResNet(
+    (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (prelu): PReLU(num_parameters=64)
+    (layer1): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 64, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer2): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (3): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer3): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (3): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (4): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (5): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer4): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (dropout): Dropout(p=0.0, inplace=True)
+  )
+  (heads): FaceHead(
+    (pool_layer): Flatten()
+    (bottleneck): Sequential(
+      (0): Conv2d(25088, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (cls_layer): CosSoftmax(num_classes=360232, scale=64, margin=0.4)
+  )
+)
+[12/01 00:21:38] fastreid.partial_fc INFO: softmax weight init successfully!
+[12/01 00:21:38] fastreid.partial_fc INFO: softmax weight mom init successfully!
+[12/01 00:22:20] fastreid INFO: Rank of current process: 0. World size: 1
+[12/01 00:22:21] fastreid INFO: Environment info:
+----------------------  ---------------------------------------------------------------
+sys.platform            linux
+Python                  3.9.5 (default, Jun  4 2021, 12:28:51) [GCC 7.5.0]
+numpy                   1.21.3
+fastreid                1.3 @/home/zyl/fast-reid/./fastreid
+FASTREID_ENV_MODULE     <not set>
+PyTorch                 1.9.0 @/home/zyl/enter/lib/python3.9/site-packages/torch
+PyTorch debug build     False
+GPU available           True
+GPU 0                   GeForce GTX 1050 Ti
+CUDA_HOME               /usr/local/cuda-11.1
+Pillow                  8.3.1
+torchvision             0.10.0 @/home/zyl/enter/lib/python3.9/site-packages/torchvision
+torchvision arch flags  sm_35, sm_50, sm_60, sm_70, sm_75, sm_80, sm_86
+fvcore                  0.1.5.post20211023
+cv2                     4.5.4-dev
+----------------------  ---------------------------------------------------------------
+PyTorch built with:
+  - GCC 7.3
+  - C++ Version: 201402
+  - Intel(R) oneAPI Math Kernel Library Version 2021.3-Product Build 20210617 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v2.1.2 (Git Hash 98be7e8afa711dc9b66c8ff3504129cb82013cdb)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 11.1
+  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_37,code=compute_37
+  - CuDNN 8.0.5
+  - Magma 2.5.2
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.1, CUDNN_VERSION=8.0.5, CXX_COMPILER=/opt/rh/devtoolset-7/root/usr/bin/c++, CXX_FLAGS= -Wno-deprecated -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -fopenmp -DNDEBUG -DUSE_KINETO -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wno-narrowing -Wall -Wextra -Werror=return-type -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-result -Wno-unused-local-typedefs -Wno-strict-overflow -Wno-strict-aliasing -Wno-error=deprecated-declarations -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=redundant-decls -Wno-error=old-style-cast -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=1.9.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, 
+
+[12/01 00:22:21] fastreid INFO: Command line arguments: Namespace(config_file='/home/zyl/fast-reid/projects/FastFace/configs/r34_ir.yml', resume=False, eval_only=False, num_gpus=1, num_machines=1, machine_rank=0, dist_url='tcp://127.0.0.1:50152', opts=['MODEL.DEVICE', 'cuda:0'])
+[12/01 00:22:21] fastreid INFO: Contents of args.config_file=/home/zyl/fast-reid/projects/FastFace/configs/r34_ir.yml:
+_BASE_: face_base.yml
+
+MODEL:
+
+  BACKBONE:
+    DEPTH: 34x
+    FEAT_DIM: 25088 # 512x7x7
+    DROPOUT: 0.
+
+  HEADS:
+    PFC:
+      ENABLED: True
+
+OUTPUT_DIR: projects/FastFace/logs/pfc0.1_insightface
+
+[12/01 00:22:21] fastreid INFO: Running with full config:
+CUDNN_BENCHMARK: True
+DATALOADER:
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 4
+  SAMPLER_TRAIN: TrainingSampler
+  SET_WEIGHT: []
+DATASETS:
+  COMBINEALL: False
+  NAMES: ('MS1MV2',)
+  REC_PATH: /home/zyl/facedataset/faces_emore/train.rec
+  TESTS: ('CFP_FP', 'AgeDB_30', 'LFW')
+INPUT:
+  AFFINE:
+    ENABLED: False
+  AUGMIX:
+    ENABLED: False
+    PROB: 0.0
+  AUTOAUG:
+    ENABLED: False
+    PROB: 0.0
+  CJ:
+    BRIGHTNESS: 0.15
+    CONTRAST: 0.15
+    ENABLED: False
+    HUE: 0.1
+    PROB: 0.5
+    SATURATION: 0.1
+  CROP:
+    ENABLED: False
+    RATIO: [0.75, 1.3333333333333333]
+    SCALE: [0.16, 1]
+    SIZE: [224, 224]
+  FLIP:
+    ENABLED: True
+    PROB: 0.5
+  PADDING:
+    ENABLED: False
+    MODE: constant
+    SIZE: 10
+  REA:
+    ENABLED: False
+    PROB: 0.5
+    VALUE: [123.675, 116.28, 103.53]
+  RPT:
+    ENABLED: False
+    PROB: 0.5
+  SIZE_TEST: [0]
+  SIZE_TRAIN: [0]
+KD:
+  EMA:
+    ENABLED: False
+    MOMENTUM: 0.999
+  MODEL_CONFIG: []
+  MODEL_WEIGHTS: []
+MODEL:
+  BACKBONE:
+    ATT_DROP_RATE: 0.0
+    DEPTH: 34x
+    DROPOUT: 0.0
+    DROP_PATH_RATIO: 0.1
+    DROP_RATIO: 0.0
+    FEAT_DIM: 25088
+    LAST_STRIDE: 1
+    NAME: build_iresnet_backbone
+    NORM: BN
+    PRETRAIN: False
+    PRETRAIN_PATH: 
+    SIE_COE: 3.0
+    STRIDE_SIZE: (16, 16)
+    WITH_IBN: False
+    WITH_NL: False
+    WITH_SE: False
+  DEVICE: cuda:0
+  FREEZE_LAYERS: []
+  HEADS:
+    CLS_LAYER: CosSoftmax
+    EMBEDDING_DIM: 512
+    MARGIN: 0.4
+    NAME: FaceHead
+    NECK_FEAT: after
+    NORM: BN
+    NUM_CLASSES: 360232
+    PFC:
+      ENABLED: True
+      SAMPLE_RATE: 0.1
+    POOL_LAYER: Flatten
+    SCALE: 64
+    WITH_BNNECK: True
+  LOSSES:
+    CE:
+      ALPHA: 0.2
+      EPSILON: 0.0
+      SCALE: 1.0
+    CIRCLE:
+      GAMMA: 128
+      MARGIN: 0.25
+      SCALE: 1.0
+    COSFACE:
+      GAMMA: 128
+      MARGIN: 0.25
+      SCALE: 1.0
+    FL:
+      ALPHA: 0.25
+      GAMMA: 2
+      SCALE: 1.0
+    NAME: ('CrossEntropyLoss',)
+    TRI:
+      HARD_MINING: False
+      MARGIN: 0.3
+      NORM_FEAT: False
+      SCALE: 1.0
+  META_ARCHITECTURE: FaceBaseline
+  PIXEL_MEAN: [127.5, 127.5, 127.5]
+  PIXEL_STD: [127.5, 127.5, 127.5]
+  QUEUE_SIZE: 8192
+  WEIGHTS: 
+OUTPUT_DIR: projects/FastFace/logs/pfc0.1_insightface
+SOLVER:
+  AMP:
+    ENABLED: True
+  BASE_LR: 0.05
+  BIAS_LR_FACTOR: 1.0
+  CHECKPOINT_PERIOD: 1
+  CLIP_GRADIENTS:
+    CLIP_TYPE: norm
+    CLIP_VALUE: 5.0
+    ENABLED: False
+    NORM_TYPE: 2.0
+  DELAY_EPOCHS: 0
+  ETA_MIN_LR: 1e-07
+  FREEZE_ITERS: 0
+  GAMMA: 0.1
+  HEADS_LR_FACTOR: 1.0
+  IMS_PER_BATCH: 256
+  MAX_EPOCH: 20
+  MOMENTUM: 0.9
+  NESTEROV: False
+  OPT: SGD
+  SCHED: MultiStepLR
+  STEPS: [8, 12, 15, 18]
+  WARMUP_FACTOR: 0.1
+  WARMUP_ITERS: 0
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+  WEIGHT_DECAY_NORM: 0.0005
+TEST:
+  AQE:
+    ALPHA: 3.0
+    ENABLED: False
+    QE_K: 5
+    QE_TIME: 1
+  EVAL_PERIOD: 1
+  FLIP:
+    ENABLED: False
+  IMS_PER_BATCH: 512
+  METRIC: cosine
+  PRECISE_BN:
+    DATASET: Market1501
+    ENABLED: False
+    NUM_ITER: 300
+  RERANK:
+    ENABLED: False
+    K1: 20
+    K2: 6
+    LAMBDA: 0.3
+  ROC:
+    ENABLED: False
+[12/01 00:22:21] fastreid INFO: Full config saved to /home/zyl/fast-reid/projects/FastFace/logs/pfc0.1_insightface/config.yaml
+[12/01 00:22:21] fastreid.utils.env INFO: Using a generated random seed 21586860
+[12/01 00:22:21] fastreid.face_data INFO: loading recordio /home/zyl/facedataset/faces_emore/train.rec...
+[12/01 00:22:25] fastreid.face_data INFO: Number of Samples: 5822653, Number of Classes: 85742
+[12/01 00:22:25] fastreid.data.build INFO: Using training sampler TrainingSampler
+[12/01 00:22:31] fastreid.engine.defaults INFO: Model:
+FaceBaseline(
+  (backbone): IResNet(
+    (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (prelu): PReLU(num_parameters=64)
+    (layer1): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 64, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer2): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (3): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer3): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (3): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (4): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (5): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer4): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (dropout): Dropout(p=0.0, inplace=True)
+  )
+  (heads): FaceHead(
+    (pool_layer): Flatten()
+    (bottleneck): Sequential(
+      (0): Conv2d(25088, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (cls_layer): CosSoftmax(num_classes=360232, scale=64, margin=0.4)
+  )
+)
+[12/01 00:22:31] fastreid.partial_fc INFO: softmax weight init successfully!
+[12/01 00:22:31] fastreid.partial_fc INFO: softmax weight mom init successfully!
+[12/01 08:47:44] fastreid INFO: Rank of current process: 0. World size: 1
+[12/01 08:47:44] fastreid INFO: Environment info:
+----------------------  ---------------------------------------------------------------
+sys.platform            linux
+Python                  3.9.5 (default, Jun  4 2021, 12:28:51) [GCC 7.5.0]
+numpy                   1.21.3
+fastreid                1.3 @/home/zyl/fast-reid/./fastreid
+FASTREID_ENV_MODULE     <not set>
+PyTorch                 1.9.0 @/home/zyl/enter/lib/python3.9/site-packages/torch
+PyTorch debug build     False
+GPU available           True
+GPU 0                   GeForce GTX 1050 Ti
+CUDA_HOME               /usr/local/cuda-11.1
+Pillow                  8.3.1
+torchvision             0.10.0 @/home/zyl/enter/lib/python3.9/site-packages/torchvision
+torchvision arch flags  sm_35, sm_50, sm_60, sm_70, sm_75, sm_80, sm_86
+fvcore                  0.1.5.post20211023
+cv2                     4.5.4-dev
+----------------------  ---------------------------------------------------------------
+PyTorch built with:
+  - GCC 7.3
+  - C++ Version: 201402
+  - Intel(R) oneAPI Math Kernel Library Version 2021.3-Product Build 20210617 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v2.1.2 (Git Hash 98be7e8afa711dc9b66c8ff3504129cb82013cdb)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 11.1
+  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_37,code=compute_37
+  - CuDNN 8.0.5
+  - Magma 2.5.2
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.1, CUDNN_VERSION=8.0.5, CXX_COMPILER=/opt/rh/devtoolset-7/root/usr/bin/c++, CXX_FLAGS= -Wno-deprecated -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -fopenmp -DNDEBUG -DUSE_KINETO -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wno-narrowing -Wall -Wextra -Werror=return-type -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-result -Wno-unused-local-typedefs -Wno-strict-overflow -Wno-strict-aliasing -Wno-error=deprecated-declarations -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=redundant-decls -Wno-error=old-style-cast -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=1.9.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, 
+
+[12/01 08:47:44] fastreid INFO: Command line arguments: Namespace(config_file='/home/zyl/fast-reid/projects/FastFace/configs/r34_ir.yml', resume=False, eval_only=False, num_gpus=1, num_machines=1, machine_rank=0, dist_url='tcp://127.0.0.1:50152', opts=['MODEL.DEVICE', 'cuda:0'])
+[12/01 08:47:44] fastreid INFO: Contents of args.config_file=/home/zyl/fast-reid/projects/FastFace/configs/r34_ir.yml:
+_BASE_: face_base.yml
+
+MODEL:
+
+  BACKBONE:
+    DEPTH: 34x
+    FEAT_DIM: 25088 # 512x7x7
+    DROPOUT: 0.
+
+  HEADS:
+    PFC:
+      ENABLED: True
+
+OUTPUT_DIR: projects/FastFace/logs/pfc0.1_insightface
+
+[12/01 08:47:44] fastreid INFO: Running with full config:
+CUDNN_BENCHMARK: True
+DATALOADER:
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 4
+  SAMPLER_TRAIN: TrainingSampler
+  SET_WEIGHT: []
+DATASETS:
+  COMBINEALL: False
+  NAMES: ('MS1MV2',)
+  REC_PATH: /home/zyl/facedataset/faces_emore/train.rec
+  TESTS: ('CFP_FP', 'AgeDB_30', 'LFW')
+INPUT:
+  AFFINE:
+    ENABLED: False
+  AUGMIX:
+    ENABLED: False
+    PROB: 0.0
+  AUTOAUG:
+    ENABLED: False
+    PROB: 0.0
+  CJ:
+    BRIGHTNESS: 0.15
+    CONTRAST: 0.15
+    ENABLED: False
+    HUE: 0.1
+    PROB: 0.5
+    SATURATION: 0.1
+  CROP:
+    ENABLED: False
+    RATIO: [0.75, 1.3333333333333333]
+    SCALE: [0.16, 1]
+    SIZE: [224, 224]
+  FLIP:
+    ENABLED: True
+    PROB: 0.5
+  PADDING:
+    ENABLED: False
+    MODE: constant
+    SIZE: 10
+  REA:
+    ENABLED: False
+    PROB: 0.5
+    VALUE: [123.675, 116.28, 103.53]
+  RPT:
+    ENABLED: False
+    PROB: 0.5
+  SIZE_TEST: [0]
+  SIZE_TRAIN: [0]
+KD:
+  EMA:
+    ENABLED: False
+    MOMENTUM: 0.999
+  MODEL_CONFIG: []
+  MODEL_WEIGHTS: []
+MODEL:
+  BACKBONE:
+    ATT_DROP_RATE: 0.0
+    DEPTH: 34x
+    DROPOUT: 0.0
+    DROP_PATH_RATIO: 0.1
+    DROP_RATIO: 0.0
+    FEAT_DIM: 25088
+    LAST_STRIDE: 1
+    NAME: build_iresnet_backbone
+    NORM: BN
+    PRETRAIN: False
+    PRETRAIN_PATH: 
+    SIE_COE: 3.0
+    STRIDE_SIZE: (16, 16)
+    WITH_IBN: False
+    WITH_NL: False
+    WITH_SE: False
+  DEVICE: cuda:0
+  FREEZE_LAYERS: []
+  HEADS:
+    CLS_LAYER: CosSoftmax
+    EMBEDDING_DIM: 512
+    MARGIN: 0.4
+    NAME: FaceHead
+    NECK_FEAT: after
+    NORM: BN
+    NUM_CLASSES: 360232
+    PFC:
+      ENABLED: True
+      SAMPLE_RATE: 0.1
+    POOL_LAYER: Flatten
+    SCALE: 64
+    WITH_BNNECK: True
+  LOSSES:
+    CE:
+      ALPHA: 0.2
+      EPSILON: 0.0
+      SCALE: 1.0
+    CIRCLE:
+      GAMMA: 128
+      MARGIN: 0.25
+      SCALE: 1.0
+    COSFACE:
+      GAMMA: 128
+      MARGIN: 0.25
+      SCALE: 1.0
+    FL:
+      ALPHA: 0.25
+      GAMMA: 2
+      SCALE: 1.0
+    NAME: ('CrossEntropyLoss',)
+    TRI:
+      HARD_MINING: False
+      MARGIN: 0.3
+      NORM_FEAT: False
+      SCALE: 1.0
+  META_ARCHITECTURE: FaceBaseline
+  PIXEL_MEAN: [127.5, 127.5, 127.5]
+  PIXEL_STD: [127.5, 127.5, 127.5]
+  QUEUE_SIZE: 8192
+  WEIGHTS: 
+OUTPUT_DIR: projects/FastFace/logs/pfc0.1_insightface
+SOLVER:
+  AMP:
+    ENABLED: True
+  BASE_LR: 0.05
+  BIAS_LR_FACTOR: 1.0
+  CHECKPOINT_PERIOD: 1
+  CLIP_GRADIENTS:
+    CLIP_TYPE: norm
+    CLIP_VALUE: 5.0
+    ENABLED: False
+    NORM_TYPE: 2.0
+  DELAY_EPOCHS: 0
+  ETA_MIN_LR: 1e-07
+  FREEZE_ITERS: 0
+  GAMMA: 0.1
+  HEADS_LR_FACTOR: 1.0
+  IMS_PER_BATCH: 256
+  MAX_EPOCH: 20
+  MOMENTUM: 0.9
+  NESTEROV: False
+  OPT: SGD
+  SCHED: MultiStepLR
+  STEPS: [8, 12, 15, 18]
+  WARMUP_FACTOR: 0.1
+  WARMUP_ITERS: 0
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+  WEIGHT_DECAY_NORM: 0.0005
+TEST:
+  AQE:
+    ALPHA: 3.0
+    ENABLED: False
+    QE_K: 5
+    QE_TIME: 1
+  EVAL_PERIOD: 1
+  FLIP:
+    ENABLED: False
+  IMS_PER_BATCH: 512
+  METRIC: cosine
+  PRECISE_BN:
+    DATASET: Market1501
+    ENABLED: False
+    NUM_ITER: 300
+  RERANK:
+    ENABLED: False
+    K1: 20
+    K2: 6
+    LAMBDA: 0.3
+  ROC:
+    ENABLED: False
+[12/01 08:47:44] fastreid INFO: Full config saved to /home/zyl/fast-reid/projects/FastFace/logs/pfc0.1_insightface/config.yaml
+[12/01 08:47:44] fastreid.utils.env INFO: Using a generated random seed 44908504
+[12/01 08:47:44] fastreid.face_data INFO: loading recordio /home/zyl/facedataset/faces_emore/train.rec...
+[12/01 08:47:48] fastreid.face_data INFO: Number of Samples: 5822653, Number of Classes: 85742
+[12/01 08:47:48] fastreid.data.build INFO: Using training sampler TrainingSampler
+[12/01 08:47:54] fastreid.engine.defaults INFO: Model:
+FaceBaseline(
+  (backbone): IResNet(
+    (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (prelu): PReLU(num_parameters=64)
+    (layer1): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 64, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer2): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (3): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer3): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (3): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (4): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (5): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer4): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (dropout): Dropout(p=0.0, inplace=True)
+  )
+  (heads): FaceHead(
+    (pool_layer): Flatten()
+    (bottleneck): Sequential(
+      (0): Conv2d(25088, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (cls_layer): CosSoftmax(num_classes=360232, scale=64, margin=0.4)
+  )
+)
+[12/01 08:47:54] fastreid.partial_fc INFO: softmax weight init successfully!
+[12/01 08:47:54] fastreid.partial_fc INFO: softmax weight mom init successfully!
+[12/01 08:57:53] fastreid INFO: Rank of current process: 0. World size: 1
+[12/01 08:57:54] fastreid INFO: Environment info:
+----------------------  ---------------------------------------------------------------
+sys.platform            linux
+Python                  3.9.5 (default, Jun  4 2021, 12:28:51) [GCC 7.5.0]
+numpy                   1.21.3
+fastreid                1.3 @/home/zyl/fast-reid/./fastreid
+FASTREID_ENV_MODULE     <not set>
+PyTorch                 1.9.0 @/home/zyl/enter/lib/python3.9/site-packages/torch
+PyTorch debug build     False
+GPU available           True
+GPU 0                   GeForce GTX 1050 Ti
+CUDA_HOME               /usr/local/cuda-11.1
+Pillow                  8.3.1
+torchvision             0.10.0 @/home/zyl/enter/lib/python3.9/site-packages/torchvision
+torchvision arch flags  sm_35, sm_50, sm_60, sm_70, sm_75, sm_80, sm_86
+fvcore                  0.1.5.post20211023
+cv2                     4.5.4-dev
+----------------------  ---------------------------------------------------------------
+PyTorch built with:
+  - GCC 7.3
+  - C++ Version: 201402
+  - Intel(R) oneAPI Math Kernel Library Version 2021.3-Product Build 20210617 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v2.1.2 (Git Hash 98be7e8afa711dc9b66c8ff3504129cb82013cdb)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 11.1
+  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_37,code=compute_37
+  - CuDNN 8.0.5
+  - Magma 2.5.2
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.1, CUDNN_VERSION=8.0.5, CXX_COMPILER=/opt/rh/devtoolset-7/root/usr/bin/c++, CXX_FLAGS= -Wno-deprecated -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -fopenmp -DNDEBUG -DUSE_KINETO -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wno-narrowing -Wall -Wextra -Werror=return-type -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-result -Wno-unused-local-typedefs -Wno-strict-overflow -Wno-strict-aliasing -Wno-error=deprecated-declarations -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=redundant-decls -Wno-error=old-style-cast -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=1.9.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, 
+
+[12/01 08:57:54] fastreid INFO: Command line arguments: Namespace(config_file='/home/zyl/fast-reid/projects/FastFace/configs/r34_ir.yml', resume=False, eval_only=False, num_gpus=1, num_machines=1, machine_rank=0, dist_url='tcp://127.0.0.1:50152', opts=['MODEL.DEVICE', 'cuda:0'])
+[12/01 08:57:54] fastreid INFO: Contents of args.config_file=/home/zyl/fast-reid/projects/FastFace/configs/r34_ir.yml:
+_BASE_: face_base.yml
+
+MODEL:
+
+  BACKBONE:
+    DEPTH: 34x
+    FEAT_DIM: 25088 # 512x7x7
+    DROPOUT: 0.
+
+  HEADS:
+    PFC:
+      ENABLED: True
+
+OUTPUT_DIR: projects/FastFace/logs/pfc0.1_insightface
+
+[12/01 08:57:54] fastreid INFO: Running with full config:
+CUDNN_BENCHMARK: True
+DATALOADER:
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 4
+  SAMPLER_TRAIN: TrainingSampler
+  SET_WEIGHT: []
+DATASETS:
+  COMBINEALL: False
+  NAMES: ('MS1MV2',)
+  REC_PATH: /home/zyl/facedataset/faces_emore/train.rec
+  TESTS: ('CFP_FP', 'AgeDB_30', 'LFW')
+INPUT:
+  AFFINE:
+    ENABLED: False
+  AUGMIX:
+    ENABLED: False
+    PROB: 0.0
+  AUTOAUG:
+    ENABLED: False
+    PROB: 0.0
+  CJ:
+    BRIGHTNESS: 0.15
+    CONTRAST: 0.15
+    ENABLED: False
+    HUE: 0.1
+    PROB: 0.5
+    SATURATION: 0.1
+  CROP:
+    ENABLED: False
+    RATIO: [0.75, 1.3333333333333333]
+    SCALE: [0.16, 1]
+    SIZE: [224, 224]
+  FLIP:
+    ENABLED: True
+    PROB: 0.5
+  PADDING:
+    ENABLED: False
+    MODE: constant
+    SIZE: 10
+  REA:
+    ENABLED: False
+    PROB: 0.5
+    VALUE: [123.675, 116.28, 103.53]
+  RPT:
+    ENABLED: False
+    PROB: 0.5
+  SIZE_TEST: [0]
+  SIZE_TRAIN: [0]
+KD:
+  EMA:
+    ENABLED: False
+    MOMENTUM: 0.999
+  MODEL_CONFIG: []
+  MODEL_WEIGHTS: []
+MODEL:
+  BACKBONE:
+    ATT_DROP_RATE: 0.0
+    DEPTH: 34x
+    DROPOUT: 0.0
+    DROP_PATH_RATIO: 0.1
+    DROP_RATIO: 0.0
+    FEAT_DIM: 25088
+    LAST_STRIDE: 1
+    NAME: build_iresnet_backbone
+    NORM: BN
+    PRETRAIN: False
+    PRETRAIN_PATH: 
+    SIE_COE: 3.0
+    STRIDE_SIZE: (16, 16)
+    WITH_IBN: False
+    WITH_NL: False
+    WITH_SE: False
+  DEVICE: cuda:0
+  FREEZE_LAYERS: []
+  HEADS:
+    CLS_LAYER: CosSoftmax
+    EMBEDDING_DIM: 512
+    MARGIN: 0.4
+    NAME: FaceHead
+    NECK_FEAT: after
+    NORM: BN
+    NUM_CLASSES: 360232
+    PFC:
+      ENABLED: True
+      SAMPLE_RATE: 0.1
+    POOL_LAYER: Flatten
+    SCALE: 64
+    WITH_BNNECK: True
+  LOSSES:
+    CE:
+      ALPHA: 0.2
+      EPSILON: 0.0
+      SCALE: 1.0
+    CIRCLE:
+      GAMMA: 128
+      MARGIN: 0.25
+      SCALE: 1.0
+    COSFACE:
+      GAMMA: 128
+      MARGIN: 0.25
+      SCALE: 1.0
+    FL:
+      ALPHA: 0.25
+      GAMMA: 2
+      SCALE: 1.0
+    NAME: ('CrossEntropyLoss',)
+    TRI:
+      HARD_MINING: False
+      MARGIN: 0.3
+      NORM_FEAT: False
+      SCALE: 1.0
+  META_ARCHITECTURE: FaceBaseline
+  PIXEL_MEAN: [127.5, 127.5, 127.5]
+  PIXEL_STD: [127.5, 127.5, 127.5]
+  QUEUE_SIZE: 8192
+  WEIGHTS: 
+OUTPUT_DIR: projects/FastFace/logs/pfc0.1_insightface
+SOLVER:
+  AMP:
+    ENABLED: True
+  BASE_LR: 0.05
+  BIAS_LR_FACTOR: 1.0
+  CHECKPOINT_PERIOD: 1
+  CLIP_GRADIENTS:
+    CLIP_TYPE: norm
+    CLIP_VALUE: 5.0
+    ENABLED: False
+    NORM_TYPE: 2.0
+  DELAY_EPOCHS: 0
+  ETA_MIN_LR: 1e-07
+  FREEZE_ITERS: 0
+  GAMMA: 0.1
+  HEADS_LR_FACTOR: 1.0
+  IMS_PER_BATCH: 256
+  MAX_EPOCH: 20
+  MOMENTUM: 0.9
+  NESTEROV: False
+  OPT: SGD
+  SCHED: MultiStepLR
+  STEPS: [8, 12, 15, 18]
+  WARMUP_FACTOR: 0.1
+  WARMUP_ITERS: 0
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+  WEIGHT_DECAY_NORM: 0.0005
+TEST:
+  AQE:
+    ALPHA: 3.0
+    ENABLED: False
+    QE_K: 5
+    QE_TIME: 1
+  EVAL_PERIOD: 1
+  FLIP:
+    ENABLED: False
+  IMS_PER_BATCH: 512
+  METRIC: cosine
+  PRECISE_BN:
+    DATASET: Market1501
+    ENABLED: False
+    NUM_ITER: 300
+  RERANK:
+    ENABLED: False
+    K1: 20
+    K2: 6
+    LAMBDA: 0.3
+  ROC:
+    ENABLED: False
+[12/01 08:57:54] fastreid INFO: Full config saved to /home/zyl/fast-reid/projects/FastFace/logs/pfc0.1_insightface/config.yaml
+[12/01 08:57:54] fastreid.utils.env INFO: Using a generated random seed 54554354
+[12/01 08:57:54] fastreid.face_data INFO: loading recordio /home/zyl/facedataset/faces_emore/train.rec...
+[12/01 08:57:57] fastreid.face_data INFO: Number of Samples: 5822653, Number of Classes: 85742
+[12/01 08:57:57] fastreid.data.build INFO: Using training sampler TrainingSampler
+[12/01 08:58:03] fastreid.engine.defaults INFO: Model:
+FaceBaseline(
+  (backbone): IResNet(
+    (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (prelu): PReLU(num_parameters=64)
+    (layer1): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 64, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=64)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer2): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (3): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=128)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer3): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (3): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (4): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (5): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=256)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer4): Sequential(
+      (0): IBasicBlock(
+        (bn1): BatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): IBasicBlock(
+        (bn1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): IBasicBlock(
+        (bn1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (prelu): PReLU(num_parameters=512)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn3): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (bn2): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (dropout): Dropout(p=0.0, inplace=True)
+  )
+  (heads): FaceHead(
+    (pool_layer): Flatten()
+    (bottleneck): Sequential(
+      (0): Conv2d(25088, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (1): BatchNorm(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (cls_layer): CosSoftmax(num_classes=360232, scale=64, margin=0.4)
+  )
+)
+[12/01 08:58:03] fastreid.partial_fc INFO: softmax weight init successfully!
+[12/01 08:58:03] fastreid.partial_fc INFO: softmax weight mom init successfully!
+[12/01 08:58:32] fastreid.utils.checkpoint INFO: No checkpoint found. Training model from scratch
+[12/01 08:58:32] fastreid.utils.checkpoint INFO: No checkpoint found. Training model from scratch
+[12/01 08:58:32] fastreid.engine.train_loop INFO: Starting training from epoch 0
+[12/01 08:58:35] fastreid.engine.train_loop ERROR: Exception during training:
+Traceback (most recent call last):
+  File "/home/zyl/fast-reid/./fastreid/engine/train_loop.py", line 145, in train
+    self.run_step()
+  File "/home/zyl/fast-reid/./fastreid/engine/defaults.py", line 357, in run_step
+    self._trainer.run_step()
+  File "/home/zyl/fast-reid/projects/FastFace/fastface/trainer.py", line 184, in run_step
+    features, targets = self.model(data)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/zyl/fast-reid/projects/FastFace/fastface/modeling/face_baseline.py", line 25, in forward
+    features = self.backbone(images)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/zyl/fast-reid/projects/FastFace/fastface/modeling/iresnet.py", line 146, in forward
+    x = self.layer1(x)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/container.py", line 139, in forward
+    input = module(input)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/zyl/fast-reid/projects/FastFace/fastface/modeling/iresnet.py", line 50, in forward
+    out = self.bn1(x)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/modules/batchnorm.py", line 167, in forward
+    return F.batch_norm(
+  File "/home/zyl/enter/lib/python3.9/site-packages/torch/nn/functional.py", line 2281, in batch_norm
+    return torch.batch_norm(
+RuntimeError: CUDA out of memory. Tried to allocate 392.00 MiB (GPU 0; 3.94 GiB total capacity; 2.87 GiB already allocated; 139.56 MiB free; 2.88 GiB reserved in total by PyTorch)
+[12/01 08:58:35] fastreid.engine.hooks INFO: Total training time: 0:00:02 (0:00:00 on hooks)

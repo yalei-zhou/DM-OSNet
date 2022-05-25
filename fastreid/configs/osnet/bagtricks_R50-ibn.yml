@@ -1,0 +1,11 @@
+_BASE_: ../Base-bagtricks-osnet.yml
+
+MODEL:
+  BACKBONE:
+    WITH_IBN: True
+
+DATASETS:
+  NAMES: ("Market1501",)
+  TESTS: ("Market1501",)
+
+OUTPUT_DIR: logs/oxnet/bagtricks_oxnetx1_0-ibn_test

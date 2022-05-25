@@ -1,0 +1,20 @@
+_BASE_: Base-kd.yml
+
+MODEL:
+  META_ARCHITECTURE: Distiller
+  BACKBONE:
+    DEPTH: osnet
+    FEAT_DIM: 512
+    WITH_IBN: False
+    PRETRAIN: True
+    PRETRAIN_PATH: /home/zyl/fast-reid/projects/FastDistill/osnet_x1_0_imagenet.pth
+
+KD:
+  MODEL_CONFIG: ("projects/FastDistill/logs/dukemtmc/r101_ibn/config.yaml",)
+  MODEL_WEIGHTS: ("projects/FastDistill/logs/dukemtmc/r101_ibn/model_best.pth",)
+
+DATASETS:
+  NAMES: ("Market1501",)
+  TESTS: ("Market1501",)
+
+OUTPUT_DIR: projects/FastDistill/logs/dukemtmc/kd-r34-r101_ibn

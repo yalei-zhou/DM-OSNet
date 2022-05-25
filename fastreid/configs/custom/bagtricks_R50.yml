@@ -1,0 +1,7 @@
+_BASE_: ../Base-bagtricks.yml
+
+DATASETS:
+  NAMES: ("Market1501","MSMT17","DukeMTMC")
+  TESTS: ("Market1501","MSMT17","DukeMTMC")
+
+OUTPUT_DIR: logs/custom/bagtricks_R50_1

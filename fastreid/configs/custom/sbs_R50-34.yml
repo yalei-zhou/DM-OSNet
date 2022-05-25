@@ -1,0 +1,12 @@
+_BASE_: ../Base-SBS.yml
+
+MODEL:
+  BACKBONE:
+    DEPTH: 34x
+    WITH_IBN: True
+
+DATASETS:
+  NAMES: ("Market1501","MSMT17","DukeMTMC")
+  TESTS: ("Market1501","MSMT17","DukeMTMC")
+
+OUTPUT_DIR: logs/custom/sbs_R34-ibn

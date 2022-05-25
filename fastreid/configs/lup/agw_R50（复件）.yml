@@ -1,0 +1,9 @@
+_BASE_: "../Base-AGW.yml"
+
+MODEL:
+  BACKBONE:
+    WITH_IBN: False
+    
+  
+
+OUTPUT_DIR: "logs/lup/agw_R50"

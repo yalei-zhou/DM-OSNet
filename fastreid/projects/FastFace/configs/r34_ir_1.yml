@@ -1,0 +1,14 @@
+_BASE_: face_base_1.yml
+
+MODEL:
+
+  BACKBONE:
+    DEPTH: 34x
+    FEAT_DIM: 25088 # 512x7x7
+    DROPOUT: 0.
+
+  HEADS:
+    PFC:
+      ENABLED: True
+
+OUTPUT_DIR: projects/FastFace/logs/pfc0.1_insightface

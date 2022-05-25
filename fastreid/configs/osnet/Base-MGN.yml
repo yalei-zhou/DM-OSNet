@@ -1,0 +1,12 @@
+_BASE_: /home/zyl/fast-reid/configs/osnet/Base-SBS.yml
+
+MODEL:
+  META_ARCHITECTURE: MGN
+
+  FREEZE_LAYERS: [backbone, b1, b2, b3,]
+
+  BACKBONE:
+    WITH_NL: False
+
+  HEADS:
+    EMBEDDING_DIM: 256

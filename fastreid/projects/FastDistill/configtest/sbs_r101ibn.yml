@@ -1,0 +1,14 @@
+_BASE_: Base-kd.yml
+
+MODEL:
+  BACKBONE:
+    WITH_IBN: False
+    DEPTH: 101x
+    PRETRAIN: True
+    PRETRAIN_PATH: /home/zyl/fast-reid/weights/LUPersonpretrain/checkpoint.pth
+
+DATASETS:
+  NAMES: ("Market1501",)
+  TESTS: ("Market1501",)
+
+OUTPUT_DIR: projects/FastDistill/logs/dukemtmc/r101_ibn
