@@ -42,7 +42,7 @@ from fastreid.utils.checkpoint import get_missing_parameters_message, get_unexpe
 # from fastreid.modeling.backbones.build import BACKBONE_REGISTRY
 from .build import BACKBONE_REGISTRY
 
-from .TransCNN import Attention
+
 
 logger = logging.getLogger(__name__)
 model_urls = {
@@ -59,38 +59,88 @@ model_urls = {
 }
 
 
-class MHSA(nn.Module):
-    def __init__(self, n_dims, width=14, height=14, heads=4):
-        super(MHSA, self).__init__()
-        self.heads = heads
-        self.query = nn.Conv2d(n_dims, n_dims, kernel_size=1)
-        self.query = nn.Conv2d(n_dims, n_dims, kernel_size=1)
-        self.key = nn.Conv2d(n_dims, n_dims, kernel_size=1)
-        self.value = nn.Conv2d(n_dims, n_dims, kernel_size=1)
+class Attention(nn.Module):
+    def __init__(self, dim, head_dim, grid_size=1, ds_ratio=1, drop=0., norm_layer=nn.BatchNorm2d):
+        super().__init__()
+        assert dim % head_dim == 0
+        self.num_heads = dim // head_dim
+        self.head_dim = head_dim
+        self.scale = self.head_dim ** -0.5
+        self.grid_size = grid_size
 
-        self.rel_h = nn.Parameter(torch.randn([1, heads, n_dims // heads, 1,height ]), requires_grad=True)
-        self.rel_w = nn.Parameter(torch.randn([1, heads, n_dims // heads, width, 1]), requires_grad=True)
-
-        self.softmax = nn.Softmax(dim=-1)
-
+        self.norm = norm_layer(dim)
+        self.qkv = nn.Conv2d(dim, dim * 3, 1)#dim = 64
+        self.proj = nn.Conv2d(dim, dim, 1)
+        self.drop = nn.Dropout2d(drop, inplace=True)
+        # self.conv2 = nn.Conv2d(
+        #     dim,
+        #     dim,
+        #     3,
+        #     stride=1,
+        #     padding=1,
+        #     bias=False,
+        #     groups=dim
+        # )
+        if grid_size > 1:
+            self.grid_norm = norm_layer(dim)
+            self.avg_pool = nn.AvgPool2d(ds_ratio, stride=ds_ratio)
+            self.ds_norm = norm_layer(dim)
+            self.q = nn.Conv2d(dim, dim, 1)
+            self.kv = nn.Conv2d(dim, dim * 2, 1)
+        # self.transform_conv = nn.Conv2d(self.num_heads,self.num_heads,kernel_size=1,stride=1)
+        # self.transform_norm = nn.InstanceNorm2d(self.num_heads)
+        # self.rel_h = nn.Parameter(torch.randn([1, self.num_heads, self.head_dim, 1,64 ]), requires_grad=True)
+        # self.rel_w = nn.Parameter(torch.randn([1, self.num_heads, self.head_dim, 32, 1]), requires_grad=True)
+        # self.rel_h = nn.Parameter(torch.randn([1, dim, 1,64 ]), requires_grad=True)
+        # self.rel_w = nn.Parameter(torch.randn([1, dim, 32, 1]), requires_grad=True)
     def forward(self, x):
-        n_batch, C, width, height = x.size()
-        q = self.query(x).view(n_batch, self.heads, C // self.heads, -1)#1->(2,4,128,196)
-        k = self.key(x).view(n_batch, self.heads, C // self.heads, -1)
-        v = self.value(x).view(n_batch, self.heads, C // self.heads, -1)
+        B, C, H, W = x.shape#16,64,64,32
+        qkv = self.qkv(self.norm(x))#64,192,64,32
 
-        content_content = torch.matmul(q.permute(0, 1, 3, 2), k)
+        if self.grid_size > 1:
+            grid_h, grid_w = H // self.grid_size, W // self.grid_size#(8,4)
+            qkv = qkv.reshape(B, 3, self.num_heads, self.head_dim, grid_h,#(64,3,1,64,8,8,4,8)
+                self.grid_size, grid_w, self.grid_size) # B QKV Heads Dim H GSize W GSize
+            qkv = qkv.permute(1, 0, 2, 4, 6, 5, 7, 3)#permute将tensor的维度换位。(3,64,1,8,4,8,8,64)
+            qkv = qkv.reshape(3, -1, self.grid_size * self.grid_size, self.head_dim)#(3,2048,64,64)
+            q, k, v = qkv[0], qkv[1], qkv[2]#2048,64,64
 
-        content_position = (self.rel_h + self.rel_w).view(1, self.heads, C // self.heads, -1).permute(0, 1, 3, 2)
-        content_position = torch.matmul(content_position, q)
+            attn = (q @ k.transpose(-2, -1)) * self.scale#transpose交换一个tensor的两个维度.2048,64,64
+            attn = attn.softmax(dim=-1)
+            grid_x = (attn @ v).reshape(B, self.num_heads, grid_h, grid_w,#@是用来对tensor进行矩阵相乘的
+                self.grid_size, self.grid_size, self.head_dim)#(64,1,8,4,8,8,64)
+            grid_x = grid_x.permute(0, 1, 6, 2, 4, 3, 5).reshape(B, C, H, W)#(64,64,64,32)
+            grid_x = self.grid_norm(x + grid_x)
 
-        energy = content_content + content_position
-        attention = self.softmax(energy)
+            q = self.q(grid_x).reshape(B, self.num_heads, self.head_dim, -1)#(64,1,64,2048)
+            q = q.transpose(-2, -1)#(64,1,2048,64)
+            kv = self.kv(self.ds_norm(self.avg_pool(grid_x)))#64,128,8,4
+            kv = kv.reshape(B, 2, self.num_heads, self.head_dim, -1)#64,2,1,64,32
+            kv = kv.permute(1, 0, 2, 4, 3)#2,64,1,32,64
+            k, v = kv[0], kv[1]#64,1,32,64
+        else:
+            qkv = qkv.reshape(B, 3, self.num_heads, self.head_dim, -1)
+            qkv = qkv.permute(1, 0, 2, 4, 3)
+            q, k, v = qkv[0], qkv[1], qkv[2]
+        # s = k.transpose(-2, -1)
+        # aa = q@s
+        # bb = aa*self.scale
+        attn = (q @ k.transpose(-2, -1)) * self.scale#64,1,2048,32
+        
+        # pos = self.ds_norm(self.avg_pool((self.rel_h + self.rel_w)))
+        # # pos = pos.reshape(1, 2, self.num_heads, self.head_dim, -1)
+        # content_position = pos.view(1, self.num_heads,self.head_dim, -1).permute(0, 1, 3, 2)
+        # content_position = torch.matmul(q,content_position.transpose(-2, -1))
+        # attn = attn+content_position
+        # attn = self.transform_conv(attn)
+        attn = attn.softmax(dim=-1)
+        # attn = self.transform_norm(attn)
+        global_x = (attn @ v).transpose(-2, -1).reshape(B, C, H, W)#64,64,64,32
+        if self.grid_size > 1:
+            global_x = global_x + grid_x
+        x = self.drop(self.proj(global_x))#64,64,64,32
 
-        out = torch.matmul(v, attention.permute(0, 1, 3, 2))
-        out = out.view(n_batch, C, width, height)
-
-        return out
+        return x
 
 
 ##########
