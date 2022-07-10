@@ -6,6 +6,8 @@ For installation and basic usage instructions, please refer to [fast-reid](https
 
 **dukeMTMC** [GoogleDriver](https://drive.google.com/open?id=1jjE85dRCMOgRtvJ5RQV9-Afs-2_5dY3O)
 
+**cuhk03** [GoogleDriver](https://drive.google.com/file/d/1gKB_n8Ofgmhru23FYRISjQR_-rCuSh3f/view?usp=sharing)
+
 **MSMT17** [GoogleDriver](https://drive.google.com/file/d/1X12SuDvZlSr6V9gn9TXw2A7R1BYRblUH/view?usp=sharing)
 
 **LUPerson** To obtain the LUPerson dataset please refer to [LUPerson](https://github.com/DengpanFu/LUPerson).
