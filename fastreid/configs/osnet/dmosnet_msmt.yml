@@ -6,4 +6,4 @@ DATASETS:
   NAMES: ("MSMT17",)
   TESTS: ("MSMT17",)
 
-OUTPUT_DIR: logs/market1501/sbs_R50-ibn
+OUTPUT_DIR: logs/msmt17/dmosnet100
