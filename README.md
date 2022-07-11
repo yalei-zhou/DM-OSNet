@@ -15,7 +15,13 @@ For installation and basic usage instructions, please refer to [fast-reid](https
 # Evaluation
 **market1501**
 ```bash
-python tools/train_net.py --config-file fastreid/configs/osnet/dmosnet_market1501.yml  --eval-only MODEL.WEIGHTS fastreid/saveweights/model_best_zl_osnet100.pth  MODEL.DEVICE "cuda:0
+python tools/train_net.py --config-file fastreid/configs/osnet/dmosnet_market1501.yml  --eval-only MODEL.WEIGHTS fastreid/saveweights/
+model_best_dmosnet100_market.pth   MODEL.DEVICE "cuda:0
+```
+**CUHK03-labeled**
+```bash
+python tools/train_net.py --config-file fastreid/configs/osnet/dmosnet_cuhk03.yml  --eval-only MODEL.WEIGHTS fastreid/saveweights/
+model_best_dmosent100_cuhk03_labeled.pth   MODEL.DEVICE "cuda:0
 ```
 **dukeMTMC**
 ```bash
