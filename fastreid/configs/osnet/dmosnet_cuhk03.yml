@@ -1,0 +1,7 @@
+_BASE_: Base-bagtricks.yml
+
+DATASETS:
+  NAMES: ("CUHK03",)
+  TESTS: ("CUHK03",)
+
+OUTPUT_DIR: logs/cuhk03/dmosnet100
