@@ -6,4 +6,4 @@ DATASETS:
   NAMES: ("DukeMTMC",)
   TESTS: ("DukeMTMC",)
 
-OUTPUT_DIR: logs/market1501/sbs_R50-ibn
+OUTPUT_DIR: logs/duke/dmosnet100
